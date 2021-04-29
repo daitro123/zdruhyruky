@@ -14,14 +14,43 @@
 	& nav {
 		display: flex;
 		justify-content: space-between;
+		position: relative;
 
-		& ul {
+		& > ul {
 			display: flex;
 			list-style: none;
 
-			& li:not(li:last-child) {
-				margin-right: 2rem;
+			& li {
+				cursor: pointer;
+				&:not(li:last-child) {
+					margin-right: 2rem;
+				}
 			}
+		}
+	}
+
+	& .catalog {
+		position: absolute;
+		background-color: $clr-brown-medium;
+		top: 100%;
+		box-shadow: 0rem 1rem 5rem rgba(0, 0, 0, 0.5);
+		opacity: 0;
+		pointer-events: none;
+		transition: all 0.2s linear;
+
+		& > ul {
+			columns: 2;
+			padding: 2rem;
+			list-style: none;
+		}
+
+		& li {
+			padding: 1rem;
+		}
+
+		&.is-shown {
+			opacity: 1;
+			pointer-events: all;
 		}
 	}
 }

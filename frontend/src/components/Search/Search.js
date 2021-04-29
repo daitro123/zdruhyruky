@@ -16,7 +16,7 @@ const Search = () => {
 	useEffect(() => {
 		const fetchProducts = async () => {
 			try {
-				const response = await fetch("http://localhost:3100");
+				const response = await fetch("http://localhost:3100/items");
 				if (response.ok) {
 					const data = await response.json();
 					setProducts(data.result);
