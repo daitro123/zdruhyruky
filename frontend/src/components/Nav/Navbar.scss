@@ -1,0 +1,27 @@
+@import "../../sass/variables.scss";
+
+.Navbar {
+	background-color: $clr-main;
+	font-size: 2rem;
+	& .logo {
+		font-family: "Cormorant Garamond", serif;
+		font-size: 4rem;
+		line-height: 1;
+		letter-spacing: -7px;
+		color: #fa7d5d;
+	}
+
+	& nav {
+		display: flex;
+		justify-content: space-between;
+
+		& ul {
+			display: flex;
+			list-style: none;
+
+			& li:not(li:last-child) {
+				margin-right: 2rem;
+			}
+		}
+	}
+}

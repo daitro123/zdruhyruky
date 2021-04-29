@@ -1,0 +1,27 @@
+@import "../../sass/variables.scss";
+.Search {
+	width: 50%;
+	margin: 0 auto;
+	& form {
+		text-align: center;
+
+		& input {
+			text-align: left;
+			width: 100%;
+			background: none;
+			border: none;
+			border-bottom: 1px solid $clr-brown-dark;
+			font-size: 2rem;
+			font-family: inherit;
+			line-height: 1.5;
+			transition: all 0.5s ease-out;
+			outline: none;
+			padding: 0 2rem;
+			color: inherit;
+
+			&::placeholder {
+				opacity: 0.2;
+			}
+		}
+	}
+}
