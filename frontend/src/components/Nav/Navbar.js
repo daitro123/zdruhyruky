@@ -3,17 +3,45 @@ import Search from "../Search/Search";
 import "./Navbar.scss";
 
 const Navbar = () => {
-	const [isCatalog, setIsCatalog] = useState(false);
+	const [catalog, setCatalog] = useState({ isOpen: false, name: "deti" });
+	const refLinks = useRef(null);
 
 	// close catalog if user clicks outside of it
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
-			if (!e.target.closest(".catalog")) {
-				setIsCatalog(false);
+			if (!e.target.closest(".catalog") && !refLinks.current.contains(e.target)) {
+				setCatalog({ ...catalog, isOpen: false });
 			}
 		};
 		document.addEventListener("mousedown", handleOutsideClick);
-	}, []);
+		return () => {
+			document.removeEventListener("mousedown", handleOutsideClick);
+		};
+	}, [catalog]);
+
+	const handleOpenCatalog = (e, name) => {
+		if (catalog.name !== e.target.dataset.name) {
+			setCatalog({ isOpen: true, name: name });
+		} else {
+			setCatalog({ isOpen: !catalog.isOpen, name: name });
+		}
+	};
+
+	const categories = {
+		zeny: [
+			"Doplňky",
+			"Kalhoty",
+			"Trika",
+			"Košile",
+			"Overaly",
+			"Spodní prádlo",
+			"Sportovní oblečení",
+			"Kostými a saka",
+			"Kraťasy",
+		],
+		muzi: ["Kalhoty", "Doplňky", "Trika", "Košile"],
+		deti: ["Mikiny"],
+	};
 
 	return (
 		<header className="Navbar">
@@ -23,30 +51,28 @@ const Navbar = () => {
 				<button className="btn btn-login">Přihlásit</button>
 			</div>
 			<nav className="container py-2 px-2">
-				<ul>
-					<li onClick={() => setIsCatalog(!isCatalog)}>Ženy</li>
-					<li onClick={() => setIsCatalog(!isCatalog)}>Muži</li>
-					<li onClick={() => setIsCatalog(!isCatalog)}>Děti</li>
+				<ul className="catalog-links" ref={refLinks}>
+					<li onClick={(e) => handleOpenCatalog(e, "zeny")} data-name="zeny">
+						Ženy
+					</li>
+					<li onClick={(e) => handleOpenCatalog(e, "muzi")} data-name="muzi">
+						Muži
+					</li>
+					<li onClick={(e) => handleOpenCatalog(e, "deti")} data-name="deti">
+						Děti
+					</li>
 				</ul>
+				<div className={`catalog ${catalog.isOpen ? "is-shown" : ""}`}>
+					<ul>
+						{categories[catalog.name].map((category, index) => {
+							return <li key={index}>{category}</li>;
+						})}
+					</ul>
+				</div>
 				<ul>
 					<li>O nás</li>
 					<li>FAQ</li>
 				</ul>
-
-				<div className={`catalog ${isCatalog && "is-shown"}`}>
-					<ul>
-						<li>Vše</li>
-						<li>Doplňky</li>
-						<li>Kalhoty</li>
-						<li>Trika</li>
-						<li>Košile</li>
-						<li>Overaly</li>
-						<li>Spodní prádlo</li>
-						<li>Sportovní oblečení</li>
-						<li>Kostými a saka</li>
-						<li>Kraťasy</li>
-					</ul>
-				</div>
 			</nav>
 		</header>
 	);
