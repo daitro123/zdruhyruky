@@ -45,20 +45,32 @@ const Navbar = () => {
 
 	return (
 		<header className="Navbar">
-			<div className="flex flex-sb flex-fe container py-2 px-2">
+			<div className="flex flex-sb flex-fe container ">
 				<div className="logo">ZDRUHYRUKY</div>
 				<Search />
 				<button className="btn btn-login">Přihlásit</button>
 			</div>
-			<nav className="container py-2 px-2">
+			<nav className="container">
 				<ul className="catalog-links" ref={refLinks}>
-					<li onClick={(e) => handleOpenCatalog(e, "zeny")} data-name="zeny">
+					<li
+						onClick={(e) => handleOpenCatalog(e, "zeny")}
+						data-name="zeny"
+						className={catalog.isOpen && catalog.name === "zeny" ? "catalog-shown" : ""}
+					>
 						Ženy
 					</li>
-					<li onClick={(e) => handleOpenCatalog(e, "muzi")} data-name="muzi">
+					<li
+						onClick={(e) => handleOpenCatalog(e, "muzi")}
+						data-name="muzi"
+						className={catalog.isOpen && catalog.name === "muzi" ? "catalog-shown" : ""}
+					>
 						Muži
 					</li>
-					<li onClick={(e) => handleOpenCatalog(e, "deti")} data-name="deti">
+					<li
+						onClick={(e) => handleOpenCatalog(e, "deti")}
+						data-name="deti"
+						className={catalog.isOpen && catalog.name === "deti" ? "catalog-shown" : ""}
+					>
 						Děti
 					</li>
 				</ul>

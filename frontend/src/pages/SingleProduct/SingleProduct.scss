@@ -1,0 +1,41 @@
+@import "../../sass/variables.scss";
+
+.SingleProduct {
+	padding: 4rem 0;
+	& .details {
+		margin-left: 2rem;
+		padding: 0 2rem;
+		padding-bottom: 2rem;
+		width: 35rem;
+		height: max-content;
+
+		&__wrapper {
+			display: flex;
+			justify-content: space-between;
+			margin-bottom: 1rem;
+
+			&--col {
+				flex-direction: column;
+			}
+		}
+
+		&__title,
+		&__value {
+			&--price {
+				font-weight: bold;
+			}
+		}
+
+		&__description {
+			font-size: 1.6rem;
+		}
+
+		&__heart {
+			display: flex;
+			align-items: center;
+			border-radius: 50%;
+			padding: 1.2rem;
+			background: rgba($clr-orange, 0.4);
+		}
+	}
+}

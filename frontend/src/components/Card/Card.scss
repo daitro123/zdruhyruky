@@ -37,14 +37,5 @@
 			font-size: 2rem;
 			margin-bottom: 0.5rem;
 		}
-
-		& .heart-icon {
-			fill: $clr-brown-dark;
-			transition: all 0.3s ease-in-out;
-
-			&:hover {
-				transform: scale(1.2);
-			}
-		}
 	}
 }

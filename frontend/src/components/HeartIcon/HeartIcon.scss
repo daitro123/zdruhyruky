@@ -1,0 +1,14 @@
+@import "../../sass/variables.scss";
+
+.heart-icon {
+	fill: $clr-brown-dark;
+	transition: all 0.3s ease-in-out;
+
+	&--full {
+		fill: $clr-orange;
+	}
+
+	&:hover {
+		transform: scale(1.2);
+	}
+}

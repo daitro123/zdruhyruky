@@ -8,7 +8,7 @@
 		font-size: 4rem;
 		line-height: 1;
 		letter-spacing: -7px;
-		color: #fa7d5d;
+		color: $clr-orange;
 	}
 
 	& nav {
@@ -25,6 +25,10 @@
 				&:not(li:last-child) {
 					margin-right: 2rem;
 				}
+
+				&.catalog-shown {
+					color: $clr-orange;
+				}
 			}
 		}
 	}
@@ -37,6 +41,7 @@
 		opacity: 0;
 		pointer-events: none;
 		transition: all 0.2s linear;
+		z-index: 10;
 
 		& > ul {
 			columns: 2;

@@ -7,7 +7,7 @@ const List = () => {
 	const { products } = useContext(AppContext);
 
 	return (
-		<section className="List container py-1 px-1">
+		<section className="List container">
 			{products.map((product) => {
 				return <Card key={product.id} product={product} />;
 			})}

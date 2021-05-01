@@ -1,0 +1,30 @@
+@import "../../../sass/variables.scss";
+
+.Gallery {
+	display: flex;
+
+	& img {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		object-position: center;
+	}
+}
+
+.swiper-pagination-bullet {
+	border-radius: 0 !important;
+	height: 2.5rem !important;
+	width: 4px !important;
+	background: $clr-brown-dark !important;
+	opacity: 0.2 !important;
+	transition: all 0.3s linear;
+
+	&-active {
+		background: $clr-brown-dark !important;
+		opacity: 1 !important;
+	}
+}
+
+.swiper-container-vertical > .swiper-pagination-bullets .swiper-pagination-bullet {
+	margin: 8px 0 !important;
+}
