@@ -1,0 +1,16 @@
+.Registration {
+	display: flex;
+	align-items: center;
+	min-height: 60vh;
+
+	& .registration-form {
+		width: 30ch;
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	& .registration-terms {
+		font-size: 1.3rem;
+		padding: 1rem 1rem;
+	}
+}

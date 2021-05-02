@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Search from "../Search/Search";
+import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 const Navbar = () => {
@@ -25,6 +26,11 @@ const Navbar = () => {
 		} else {
 			setCatalog({ isOpen: !catalog.isOpen, name: name });
 		}
+
+		//move position of catalog
+		const ulXPos = refLinks.current.getBoundingClientRect().x;
+		const linkXPos = e.target.getBoundingClientRect().x;
+		document.querySelector(".catalog").style.transform = `translateX(${linkXPos - ulXPos}px)`;
 	};
 
 	const categories = {
@@ -46,9 +52,14 @@ const Navbar = () => {
 	return (
 		<header className="Navbar">
 			<div className="flex flex-sb flex-fe container ">
-				<div className="logo">ZDRUHYRUKY</div>
+				<div className="logo">
+					<Link to="/">ZDRUHYRUKY</Link>
+				</div>
 				<Search />
-				<button className="btn btn-login">Přihlásit</button>
+				<Link to="/login" className="btn btn-login">
+					Přihlásit
+				</Link>
+				{/* <button className="btn btn-login">Přihlásit</button> */}
 			</div>
 			<nav className="container">
 				<ul className="catalog-links" ref={refLinks}>

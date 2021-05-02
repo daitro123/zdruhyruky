@@ -74,4 +74,41 @@
 		background: $clr-brown-dark;
 		color: #dcb595;
 	}
+
+	&--green {
+		width: 100%;
+		padding-top: 1.5rem;
+		padding-bottom: 1.5rem;
+		background: $clr-greenbrown;
+		color: $clr-main;
+		cursor: pointer;
+	}
+}
+
+.form-control {
+	margin: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	& label {
+		position: absolute;
+		font-size: 1.4rem;
+		left: 1rem;
+		top: -1.1rem;
+		padding: 0 4px;
+		background: $clr-main;
+	}
+
+	& input {
+		padding: 1.5rem;
+		background: none;
+		border: 1px solid $clr-brown-dark;
+		outline: none;
+		flex: 1;
+		color: inherit;
+		font-size: inherit;
+		font-family: inherit;
+		text-align: center;
+	}
 }
