@@ -1,5 +1,6 @@
 import React from "react";
 import "./Card.scss";
+import getURLfriendlyString from "../../utils";
 import HeartIcon from "../HeartIcon/HeartIcon";
 import { Link } from "react-router-dom";
 
@@ -8,7 +9,11 @@ const Card = ({ product }) => {
 		<article className="Card">
 			<div className="content">
 				<header>
-					<Link to={`/${product.id}`}>
+					<Link
+						to={`/${getURLfriendlyString(product.category)}/${getURLfriendlyString(
+							product.type
+						)}/${product.id}`}
+					>
 						<h3>{product.brand}</h3>
 					</Link>
 				</header>

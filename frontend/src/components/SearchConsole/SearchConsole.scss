@@ -1,0 +1,12 @@
+@import "../../sass/variables.scss";
+
+.SearchConsole {
+	& .console {
+		background: $clr-orange;
+		padding: 2rem;
+
+		& .categories {
+			display: flex;
+		}
+	}
+}

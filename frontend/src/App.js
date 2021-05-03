@@ -8,6 +8,7 @@ import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
+import SearchConsole from "./components/SearchConsole/SearchConsole";
 
 function App() {
 	return (
@@ -18,8 +19,10 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/registration" component={Registration} />
-					<Route path={"/:id"} component={SingleProduct} />
-					<Route path="*" component={Error} />
+					<Route path={"/:category/:type/:id"} component={SingleProduct} />
+					<Route path="/:category/:type" component={SearchConsole} />
+					<Route path="/:category" component={SearchConsole} />
+					<Route path="/*" component={Error} />
 				</Switch>
 			</Router>
 		</AppProvider>

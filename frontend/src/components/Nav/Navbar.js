@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import getURLfriendlyString from "../../utils";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
 
 const Navbar = () => {
-	const [catalog, setCatalog] = useState({ isOpen: false, name: "deti" });
+	const [catalog, setCatalog] = useState({ isOpen: false, name: "Děti" });
 	const refLinks = useRef(null);
 
 	// close catalog if user clicks outside of it
@@ -20,6 +21,7 @@ const Navbar = () => {
 		};
 	}, [catalog]);
 
+	// handles opening and closing of catalog popup, also position of the catalog window
 	const handleOpenCatalog = (e, name) => {
 		if (catalog.name !== e.target.dataset.name) {
 			setCatalog({ isOpen: true, name: name });
@@ -34,7 +36,7 @@ const Navbar = () => {
 	};
 
 	const categories = {
-		zeny: [
+		Ženy: [
 			"Doplňky",
 			"Kalhoty",
 			"Trika",
@@ -45,8 +47,8 @@ const Navbar = () => {
 			"Kostými a saka",
 			"Kraťasy",
 		],
-		muzi: ["Kalhoty", "Doplňky", "Trika", "Košile"],
-		deti: ["Mikiny"],
+		Muži: ["Kalhoty", "Doplňky", "Trika", "Košile"],
+		Děti: ["Mikiny"],
 	};
 
 	return (
@@ -59,36 +61,47 @@ const Navbar = () => {
 				<Link to="/login" className="btn btn-login">
 					Přihlásit
 				</Link>
-				{/* <button className="btn btn-login">Přihlásit</button> */}
 			</div>
 			<nav className="container">
 				<ul className="catalog-links" ref={refLinks}>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "zeny")}
-						data-name="zeny"
-						className={catalog.isOpen && catalog.name === "zeny" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "Ženy")}
+						data-name="Ženy"
+						className={catalog.isOpen && catalog.name === "Ženy" ? "catalog-shown" : ""}
 					>
 						Ženy
 					</li>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "muzi")}
-						data-name="muzi"
-						className={catalog.isOpen && catalog.name === "muzi" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "Muži")}
+						data-name="Muži"
+						className={catalog.isOpen && catalog.name === "Muži" ? "catalog-shown" : ""}
 					>
 						Muži
 					</li>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "deti")}
-						data-name="deti"
-						className={catalog.isOpen && catalog.name === "deti" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "Děti")}
+						data-name="Děti"
+						className={catalog.isOpen && catalog.name === "Děti" ? "catalog-shown" : ""}
 					>
 						Děti
 					</li>
 				</ul>
 				<div className={`catalog ${catalog.isOpen ? "is-shown" : ""}`}>
+					{/* Render types for catalog popup */}
 					<ul>
-						{categories[catalog.name].map((category, index) => {
-							return <li key={index}>{category}</li>;
+						{categories[catalog.name].map((type, index) => {
+							return (
+								<li key={index}>
+									<Link
+										to={`/${getURLfriendlyString(
+											catalog.name
+										)}/${getURLfriendlyString(type)}`}
+										onClick={(e) => setCatalog({ ...catalog, isOpen: false })}
+									>
+										{type}
+									</Link>
+								</li>
+							);
 						})}
 					</ul>
 				</div>
