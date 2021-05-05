@@ -8,5 +8,29 @@
 		& .categories {
 			display: flex;
 		}
+
+		& .breadcrumbs {
+			padding: 0 0 4rem 0;
+		}
+	}
+}
+
+.btn--category {
+	padding: 2rem;
+	display: flex;
+	align-items: center;
+	line-height: 1.6rem;
+	font-size: 1.6rem;
+	background: none;
+	border: 0;
+	font-family: inherit;
+	color: $clr-main;
+
+	& span {
+		margin-left: 8px;
+
+		& svg {
+			fill: $clr-main;
+		}
 	}
 }

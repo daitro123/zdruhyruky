@@ -1,0 +1,67 @@
+@import "../../sass/variables.scss";
+
+.Category {
+	position: absolute;
+	background: $clr-brown-light;
+	z-index: 5;
+
+	& .row {
+		display: flex;
+		align-items: center;
+		padding: 1.5rem 1rem;
+
+		&:not(.row:last-of-type) {
+			border-bottom: 1px solid lightgrey;
+		}
+	}
+}
+
+.checkbox-wrapper {
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+
+.checkmark {
+	width: 15rem;
+	position: relative;
+
+	&::after {
+		content: "";
+		position: absolute;
+		background: white;
+		right: 0.5rem;
+		top: 20%;
+		height: 2rem;
+		width: 2rem;
+		z-index: 6;
+		border-radius: 3px;
+		transition: background 0.1s linear;
+	}
+}
+
+input[type="checkbox"] + label {
+	&::before {
+		content: "";
+		height: 1rem;
+		width: 0.5rem;
+		position: absolute;
+		top: 0.8rem;
+		right: 1.2rem;
+		border-bottom: 1px solid $clr-brown-dark;
+		border-right: 1px solid $clr-brown-dark;
+		z-index: 7;
+		transform: rotateZ(20deg) scale(0);
+		transition: transform 0.3s ease;
+	}
+}
+
+input[type="checkbox"]:checked + label {
+	&::before {
+		transform: rotateZ(45deg) scale(1);
+	}
+
+	&::after {
+		background: $clr-greenbrown;
+	}
+}

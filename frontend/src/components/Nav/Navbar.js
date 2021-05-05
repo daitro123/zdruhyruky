@@ -8,7 +8,7 @@ const Navbar = () => {
 	const [catalog, setCatalog] = useState({ isOpen: false, name: "Děti" });
 	const refLinks = useRef(null);
 
-	// close catalog if user clicks outside of it
+	// close catalog window if user clicks outside of it
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
 			if (!e.target.closest(".catalog") && !refLinks.current.contains(e.target)) {
@@ -23,7 +23,7 @@ const Navbar = () => {
 
 	// handles opening and closing of catalog popup, also position of the catalog window
 	const handleOpenCatalog = (e, name) => {
-		if (catalog.name !== e.target.dataset.name) {
+		if (catalog.name !== name) {
 			setCatalog({ isOpen: true, name: name });
 		} else {
 			setCatalog({ isOpen: !catalog.isOpen, name: name });
@@ -66,21 +66,18 @@ const Navbar = () => {
 				<ul className="catalog-links" ref={refLinks}>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "Ženy")}
-						data-name="Ženy"
 						className={catalog.isOpen && catalog.name === "Ženy" ? "catalog-shown" : ""}
 					>
 						Ženy
 					</li>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "Muži")}
-						data-name="Muži"
 						className={catalog.isOpen && catalog.name === "Muži" ? "catalog-shown" : ""}
 					>
 						Muži
 					</li>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "Děti")}
-						data-name="Děti"
 						className={catalog.isOpen && catalog.name === "Děti" ? "catalog-shown" : ""}
 					>
 						Děti
