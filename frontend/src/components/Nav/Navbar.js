@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import getURLfriendlyString from "../../utils";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
+import { useCheckForClickOutside } from "../../custom hooks";
 import "./Navbar.scss";
 
 const Navbar = () => {
@@ -9,17 +10,7 @@ const Navbar = () => {
 	const refLinks = useRef(null);
 
 	// close catalog window if user clicks outside of it
-	useEffect(() => {
-		const handleOutsideClick = (e) => {
-			if (!e.target.closest(".catalog") && !refLinks.current.contains(e.target)) {
-				setCatalog({ ...catalog, isOpen: false });
-			}
-		};
-		document.addEventListener("mousedown", handleOutsideClick);
-		return () => {
-			document.removeEventListener("mousedown", handleOutsideClick);
-		};
-	}, [catalog]);
+	useCheckForClickOutside(refLinks, ".catalog", catalog, setCatalog);
 
 	// handles opening and closing of catalog popup, also position of the catalog window
 	const handleOpenCatalog = (e, name) => {

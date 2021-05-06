@@ -1,7 +1,7 @@
 import React from "react";
 import "./SingleProduct.scss";
 import Gallery from "./Gallery/Gallery";
-import useFetch from "../../useFetch";
+import { useFetch } from "../../custom hooks";
 import HeartIcon from "../../components/HeartIcon/HeartIcon";
 
 const SingleProduct = ({ match }) => {

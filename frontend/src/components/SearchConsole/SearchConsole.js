@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ArrowDownIcon from "./ArrowDownIcon";
 import Category from "./Category";
+import { useCheckForClickOutside } from "../../custom hooks";
 import "./SearchConsole.scss";
 
 const SearchConsole = ({ match }) => {
@@ -9,19 +10,20 @@ const SearchConsole = ({ match }) => {
 	const categoryButtons = useRef(null);
 	const category = match.params.category;
 	const type = match.params.type;
+	useCheckForClickOutside(categoryButtons, ".categories", categoryBtn, setCategoryBtn);
 
 	// close category window if user clicks outside of it
-	useEffect(() => {
-		const handleOutsideCategoryClick = (e) => {
-			if (!e.target.closest(".categories") && !categoryButtons.current.contains(e.target)) {
-				setCategoryBtn({ ...categoryBtn, isOpen: false });
-			}
-		};
-		document.addEventListener("mousedown", handleOutsideCategoryClick);
-		return () => {
-			document.removeEventListener("mousedown", handleOutsideCategoryClick);
-		};
-	}, [categoryBtn]);
+	// useEffect(() => {
+	// 	const handleOutsideCategoryClick = (e) => {
+	// 		if (!e.target.closest(".categories") && !categoryButtons.current.contains(e.target)) {
+	// 			setCategoryBtn({ ...categoryBtn, isOpen: false });
+	// 		}
+	// 	};
+	// 	document.addEventListener("mousedown", handleOutsideCategoryClick);
+	// 	return () => {
+	// 		document.removeEventListener("mousedown", handleOutsideCategoryClick);
+	// 	};
+	// }, [categoryBtn]);
 
 	// handles opening and closing of categories popup windows
 
