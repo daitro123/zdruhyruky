@@ -4,14 +4,45 @@
 	position: absolute;
 	background: $clr-brown-light;
 	z-index: 5;
+	max-height: 30rem;
+	min-width: 15rem;
+	overflow-y: auto;
+	overflow-x: hidden;
 
 	& .row {
 		display: flex;
 		align-items: center;
 		padding: 1.5rem 1rem;
+		position: relative;
+	}
 
-		&:not(.row:last-of-type) {
-			border-bottom: 1px solid lightgrey;
+	& .color {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		margin-right: 1.5rem;
+		flex-shrink: 0;
+	}
+
+	& input[type="text"] {
+		border: none;
+		color: inherit;
+		border-bottom: 1px solid $clr-brown-dark;
+		background: none;
+		outline: none;
+		font-size: inherit;
+		font-family: inherit;
+		line-height: 1.6;
+		width: 14rem;
+		margin: 0 auto;
+		opacity: 0.4;
+
+		&:focus {
+			opacity: 1;
+		}
+
+		&::placeholder {
+			opacity: 0.4;
 		}
 	}
 }
@@ -20,48 +51,44 @@
 	display: flex;
 	flex-direction: row-reverse;
 	align-items: center;
+	flex-shrink: 0;
 }
 
-.checkmark {
-	width: 15rem;
-	position: relative;
+input[type="checkbox"] + label {
+	min-width: max-content;
+	padding-right: 5rem;
+	text-transform: capitalize;
+	flex-shrink: 0;
 
 	&::after {
 		content: "";
 		position: absolute;
 		background: white;
-		right: 0.5rem;
-		top: 20%;
+		right: 1rem;
 		height: 2rem;
 		width: 2rem;
 		z-index: 6;
 		border-radius: 3px;
 		transition: background 0.1s linear;
 	}
-}
 
-input[type="checkbox"] + label {
 	&::before {
 		content: "";
 		height: 1rem;
 		width: 0.5rem;
 		position: absolute;
-		top: 0.8rem;
-		right: 1.2rem;
-		border-bottom: 1px solid $clr-brown-dark;
-		border-right: 1px solid $clr-brown-dark;
+		right: 1.7rem;
+		top: 1.8rem;
+		border-bottom: 2px solid $clr-brown-dark;
+		border-right: 2px solid $clr-brown-dark;
 		z-index: 7;
 		transform: rotateZ(20deg) scale(0);
-		transition: transform 0.3s ease;
+		transition: transform 0.2s linear;
 	}
 }
 
 input[type="checkbox"]:checked + label {
 	&::before {
 		transform: rotateZ(45deg) scale(1);
-	}
-
-	&::after {
-		background: $clr-greenbrown;
 	}
 }

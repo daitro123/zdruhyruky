@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import ArrowDownIcon from "./ArrowDownIcon";
 import Category from "./Category";
-import { useCheckForClickOutside } from "../../custom hooks";
+import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import "./SearchConsole.scss";
 
 const SearchConsole = ({ match }) => {
@@ -10,23 +10,14 @@ const SearchConsole = ({ match }) => {
 	const categoryButtons = useRef(null);
 	const category = match.params.category;
 	const type = match.params.type;
-	useCheckForClickOutside(categoryButtons, ".categories", categoryBtn, setCategoryBtn);
 
 	// close category window if user clicks outside of it
-	// useEffect(() => {
-	// 	const handleOutsideCategoryClick = (e) => {
-	// 		if (!e.target.closest(".categories") && !categoryButtons.current.contains(e.target)) {
-	// 			setCategoryBtn({ ...categoryBtn, isOpen: false });
-	// 		}
-	// 	};
-	// 	document.addEventListener("mousedown", handleOutsideCategoryClick);
-	// 	return () => {
-	// 		document.removeEventListener("mousedown", handleOutsideCategoryClick);
-	// 	};
-	// }, [categoryBtn]);
+	useCheckForClickOutside(categoryButtons, ".categories", categoryBtn, setCategoryBtn);
+
+	//close category window on escape key press
+	useCloseWindowOnEsc(categoryBtn, setCategoryBtn);
 
 	// handles opening and closing of categories popup windows
-
 	const handleCategoryClick = (e, name) => {
 		if (categoryBtn.name !== name) {
 			setCategoryBtn({ isOpen: true, name: name });
@@ -62,7 +53,9 @@ const SearchConsole = ({ match }) => {
 							Velikost
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "velikost" && <Category />}
+						{categoryBtn.isOpen && categoryBtn.name === "velikost" && (
+							<Category type="velikost" />
+						)}
 					</div>
 
 					<div className="category--wrapper">
@@ -73,7 +66,9 @@ const SearchConsole = ({ match }) => {
 							Barva
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "barva" && <Category />}
+						{categoryBtn.isOpen && categoryBtn.name === "barva" && (
+							<Category type="barva" />
+						)}
 					</div>
 
 					<div className="category--wrapper">
@@ -84,7 +79,9 @@ const SearchConsole = ({ match }) => {
 							Značka
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "znacka" && <Category />}
+						{categoryBtn.isOpen && categoryBtn.name === "znacka" && (
+							<Category type="znacka" />
+						)}
 					</div>
 
 					<div className="category--wrapper">
@@ -95,7 +92,9 @@ const SearchConsole = ({ match }) => {
 							Cena
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "cena" && <Category />}
+						{categoryBtn.isOpen && categoryBtn.name === "cena" && (
+							<Category type="cena" />
+						)}
 					</div>
 
 					<div className="category--wrapper">
@@ -106,7 +105,9 @@ const SearchConsole = ({ match }) => {
 							Stav
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "stav" && <Category />}
+						{categoryBtn.isOpen && categoryBtn.name === "stav" && (
+							<Category type="stav" />
+						)}
 					</div>
 				</div>
 			</div>

@@ -31,3 +31,17 @@ export const useCheckForClickOutside = (ref, containerSelector, state, setState)
 		};
 	}, [state]);
 };
+
+export const useCloseWindowOnEsc = (state, setState) => {
+	useEffect(() => {
+		const handleEscape = (e) => {
+			if (e.keyCode === 27 && state.isOpen) {
+				setState({ ...state, isOpen: false });
+			}
+		};
+		document.addEventListener("keydown", handleEscape);
+		return () => {
+			document.removeEventListener("keydown", handleEscape);
+		};
+	}, [state]);
+};
