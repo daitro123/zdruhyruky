@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import SearchConsole from "./components/SearchConsole/SearchConsole";
+import Selection from "./pages/Selection/Selection";
 
 function App() {
 	return (
@@ -19,9 +20,9 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/registration" component={Registration} />
-					<Route path={"/:category/:type/:id"} component={SingleProduct} />
-					<Route path="/:category/:type" component={SearchConsole} />
-					<Route path="/:category" component={SearchConsole} />
+					<Route path={"/:gender/:type/:id"} component={SingleProduct} />
+					<Route path="/:gender/:type" component={Selection} />
+					<Route path="/:gender" component={Selection} />
 					<Route path="/*" component={Error} />
 				</Switch>
 			</Router>

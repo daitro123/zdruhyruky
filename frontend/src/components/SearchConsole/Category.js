@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Category.scss";
-import { colorArr, brands, stavOptions, velikosti } from "../../data";
+import { AppContext } from "../../context";
+import { colorArr, brands, stavOptions, velikosti, druhy } from "../../data";
+import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 
 const Category = ({ type }) => {
-	const [znackyArr, setZnacky] = useState([brands]);
-	const [znacka, setZnacka] = useState("");
+	const { selectedCategories, setSelectedCategories } = useContext(AppContext);
+	const [znackyVyber, setZnackyVyber] = useState([brands]);
+	const [znackaInput, setZnackaInput] = useState("");
 	const [cena, setCena] = useState({ od: "", do: "" });
+	const [gender, setGender] = useState("");
 
 	useEffect(() => {
-		if (!znacka) {
-			setZnacky(brands.slice(0, 10));
+		if (!znackaInput) {
+			setZnackyVyber(brands.slice(0, 10));
 		} else {
-			setZnacky(
+			setZnackyVyber(
 				brands.filter(
 					(brand) =>
-						brand.toLowerCase().substring(0, znacka.length) === znacka.toLowerCase()
+						brand.toLowerCase().substring(0, znackaInput.length) ===
+						znackaInput.toLowerCase()
 				)
 			);
 		}
-	}, [znacka]);
+	}, [znackaInput]);
 
 	const getCurrencyFormat = (value) => {
 		const convertedValue = Number(value.replace(/\D/g, ""));
@@ -27,6 +32,27 @@ const Category = ({ type }) => {
 			return convertedValue.toLocaleString("cs-CS", { currency: "CZK" });
 		} else {
 			return "";
+		}
+	};
+
+	const handleCheckbox = (e, type, value) => {
+		const typeSelected = `selected${type[0].toUpperCase() + type.slice(1)}`; // get the correct Obj.key of state (selected...: value)
+
+		if (e.target.checked) {
+			// if checked add to state
+			setSelectedCategories({
+				...selectedCategories,
+				[typeSelected]: [...selectedCategories[typeSelected], value],
+			});
+		} else {
+			// if unchecked remove from state
+			const filteredArray = selectedCategories[typeSelected].filter(
+				(selected) => selected !== value
+			);
+			setSelectedCategories({
+				...selectedCategories,
+				[typeSelected]: [...filteredArray],
+			});
 		}
 	};
 
@@ -42,6 +68,10 @@ const Category = ({ type }) => {
 									type="checkbox"
 									name={`checkbox--color-${index}`}
 									id={`checkbox--color-${index}`}
+									onChange={(e) => {
+										handleCheckbox(e, "barva", barva.name);
+									}}
+									checked={selectedCategories.selectedBarva.includes(barva.name)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--color-${index}`} className="checkmark">
@@ -70,10 +100,10 @@ const Category = ({ type }) => {
 						name="brand"
 						id="brand-input"
 						placeholder="Hledat"
-						onChange={(e) => setZnacka(e.target.value)}
+						onChange={(e) => setZnackaInput(e.target.value)}
 					/>
 				</div>
-				{znackyArr.map((brand, index) => {
+				{znackyVyber.map((brand, index) => {
 					return (
 						<div className="row" key={index}>
 							<div className="checkbox-wrapper">
@@ -81,6 +111,10 @@ const Category = ({ type }) => {
 									type="checkbox"
 									name={`checkbox--brand-${index}`}
 									id={`checkbox--brand-${index}`}
+									onChange={(e) => {
+										handleCheckbox(e, "znacka", brand);
+									}}
+									checked={selectedCategories.selectedZnacka.includes(brand)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--brand-${index}`} className="checkmark">
@@ -146,6 +180,10 @@ const Category = ({ type }) => {
 									type="checkbox"
 									name={`checkbox--velikost-${index}`}
 									id={`checkbox--velikost-${index}`}
+									onChange={(e) => {
+										handleCheckbox(e, "velikost", velikost);
+									}}
+									checked={selectedCategories.selectedVelikost.includes(velikost)}
 									hidden
 								/>
 								<label
@@ -174,6 +212,10 @@ const Category = ({ type }) => {
 									type="checkbox"
 									name={`checkbox--stav-${index}`}
 									id={`checkbox--stav-${index}`}
+									onChange={(e) => {
+										handleCheckbox(e, "stav", option);
+									}}
+									checked={selectedCategories.selectedStav.includes(option)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
@@ -187,34 +229,60 @@ const Category = ({ type }) => {
 		);
 	}
 
-	return (
-		<div className="Category">
-			<div className="row">
-				<div className="checkbox-wrapper">
-					<input type="checkbox" name="checkbox" id="checkbox1" hidden />
-					<label htmlFor="checkbox1" className="checkmark">
-						Item 1
-					</label>
+	if (!gender) {
+		return (
+			<div className="Category">
+				<div className="row pointer" onClick={() => setGender("ženy")}>
+					<p>Ženy</p>
+					<ArrowRightIcon />
+				</div>
+				<div className="row pointer" onClick={() => setGender("muži")}>
+					<p>Muži</p>
+					<ArrowRightIcon />
+				</div>
+				<div className="row pointer" onClick={() => setGender("děti")}>
+					<p>Děti</p>
+					<ArrowRightIcon />
 				</div>
 			</div>
-			<div className="row">
-				<div className="checkbox-wrapper">
-					<input type="checkbox" name="checkbox" id="checkbox2" hidden />
-					<label htmlFor="checkbox2" className="checkmark">
-						Item 2
-					</label>
-				</div>
-			</div>
-			<div className="row">
-				<div className="checkbox-wrapper">
-					<input type="checkbox" name="checkbox" id="checkbox3" hidden />
-					<label htmlFor="checkbox3" className="checkmark">
-						Item 3
-					</label>
-				</div>
-			</div>
-		</div>
-	);
+		);
+	} else if (gender === "ženy") {
+		return <Druhy druhy={druhy.ženy} setGender={setGender} />;
+	} else if (gender === "muži") {
+		return <Druhy druhy={druhy.muži} setGender={setGender} />;
+	} else if (gender === "děti") {
+		return <Druhy druhy={druhy.děti} setGender={setGender} />;
+	}
 };
 
 export default Category;
+
+const Druhy = ({ druhy, setGender }) => {
+	return (
+		<div className="Category">
+			<div className="row pointer" onClick={() => setGender("")}>
+				<div className="flex">
+					<ArrowLeftIcon />
+					<p className="px-2">Zpět</p>
+				</div>
+			</div>
+			{druhy.map((option, index) => {
+				return (
+					<div className="row" key={index}>
+						<div className="checkbox-wrapper">
+							<input
+								type="checkbox"
+								name={`checkbox--stav-${index}`}
+								id={`checkbox--stav-${index}`}
+								hidden
+							/>
+							<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
+								{option}
+							</label>
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	);
+};

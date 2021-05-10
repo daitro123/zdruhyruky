@@ -12,8 +12,13 @@
 	& .row {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		padding: 1.5rem 1rem;
 		position: relative;
+
+		&:hover {
+			background: $clr-brown-lighter;
+		}
 	}
 
 	& .color {
@@ -69,7 +74,6 @@ input[type="checkbox"] + label {
 		width: 2rem;
 		z-index: 6;
 		border-radius: 3px;
-		transition: background 0.1s linear;
 	}
 
 	&::before {
@@ -83,7 +87,6 @@ input[type="checkbox"] + label {
 		border-right: 2px solid $clr-brown-dark;
 		z-index: 7;
 		transform: rotateZ(20deg) scale(0);
-		transition: transform 0.2s linear;
 	}
 }
 

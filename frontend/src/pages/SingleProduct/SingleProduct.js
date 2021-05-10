@@ -2,7 +2,7 @@ import React from "react";
 import "./SingleProduct.scss";
 import Gallery from "./Gallery/Gallery";
 import { useFetch } from "../../custom hooks";
-import HeartIcon from "../../components/HeartIcon/HeartIcon";
+import { HeartIcon } from "../../components/Icons/Icons";
 
 const SingleProduct = ({ match }) => {
 	const id = match.params.id;

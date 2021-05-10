@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import ArrowDownIcon from "./ArrowDownIcon";
+import { ArrowDownIcon } from "../Icons/Icons";
 import Category from "./Category";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import "./SearchConsole.scss";
 
-const SearchConsole = ({ match }) => {
+const SearchConsole = ({ gender, type }) => {
 	const [categoryBtn, setCategoryBtn] = useState({ isOpen: false, name: "" });
 	const categoryButtons = useRef(null);
-	const category = match.params.category;
-	const type = match.params.type;
 
 	// close category window if user clicks outside of it
 	useCheckForClickOutside(categoryButtons, ".categories", categoryBtn, setCategoryBtn);
@@ -30,7 +28,7 @@ const SearchConsole = ({ match }) => {
 		<div className="SearchConsole container">
 			<div className="console">
 				<div className="breadcrumbs">
-					<Link to="/">home</Link> / <Link to={`/${category}`}>{category}</Link>{" "}
+					<Link to="/">home</Link> / <Link to={`/${gender}`}>{gender}</Link>{" "}
 					{type && `/ ${type}`}
 				</div>
 				<div className="categories" ref={categoryButtons}>

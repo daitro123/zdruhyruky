@@ -1,13 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import getURLfriendlyString from "../../utils";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import "./Navbar.scss";
+import { AppContext } from "../../context";
 
 const Navbar = () => {
-	const [catalog, setCatalog] = useState({ isOpen: false, name: "Děti" });
+	const [catalog, setCatalog] = useState({ isOpen: false, name: "děti" });
 	const refLinks = useRef(null);
+	const { selectedCategories, setSelectedCategories } = useContext(AppContext);
 
 	// close catalog window if user clicks outside of it
 	useCheckForClickOutside(refLinks, ".catalog", catalog, setCatalog);
@@ -29,8 +31,19 @@ const Navbar = () => {
 		document.querySelector(".catalog").style.transform = `translateX(${linkXPos - ulXPos}px)`;
 	};
 
+	const handleSelection = (type) => {
+		setCatalog({ ...catalog, isOpen: false });
+
+		// update global context when clicked on item in catalog popup window
+		setSelectedCategories({
+			...selectedCategories,
+			selectedPohlavi: catalog.name,
+			selectedTyp: type,
+		});
+	};
+
 	const categories = {
-		Ženy: [
+		ženy: [
 			"Doplňky",
 			"Kalhoty",
 			"Trika",
@@ -41,8 +54,8 @@ const Navbar = () => {
 			"Kostými a saka",
 			"Kraťasy",
 		],
-		Muži: ["Kalhoty", "Doplňky", "Trika", "Košile"],
-		Děti: ["Mikiny"],
+		muži: ["Kalhoty", "Doplňky", "Trika", "Košile"],
+		děti: ["Mikiny"],
 	};
 
 	return (
@@ -59,22 +72,22 @@ const Navbar = () => {
 			<nav className="container">
 				<ul className="catalog-links" ref={refLinks}>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "Ženy")}
-						className={catalog.isOpen && catalog.name === "Ženy" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "ženy")}
+						className={catalog.isOpen && catalog.name === "ženy" ? "catalog-shown" : ""}
 					>
-						Ženy
+						ženy
 					</li>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "Muži")}
-						className={catalog.isOpen && catalog.name === "Muži" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "muži")}
+						className={catalog.isOpen && catalog.name === "muži" ? "catalog-shown" : ""}
 					>
-						Muži
+						muži
 					</li>
 					<li
-						onClick={(e) => handleOpenCatalog(e, "Děti")}
-						className={catalog.isOpen && catalog.name === "Děti" ? "catalog-shown" : ""}
+						onClick={(e) => handleOpenCatalog(e, "děti")}
+						className={catalog.isOpen && catalog.name === "děti" ? "catalog-shown" : ""}
 					>
-						Děti
+						děti
 					</li>
 				</ul>
 				<div className={`catalog ${catalog.isOpen ? "is-shown" : ""}`}>
@@ -87,7 +100,7 @@ const Navbar = () => {
 										to={`/${getURLfriendlyString(
 											catalog.name
 										)}/${getURLfriendlyString(type)}`}
-										onClick={(e) => setCatalog({ ...catalog, isOpen: false })}
+										onClick={(e) => handleSelection(type)}
 									>
 										{type}
 									</Link>
