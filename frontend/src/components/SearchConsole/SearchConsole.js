@@ -1,26 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ArrowDownIcon } from "../Icons/Icons";
-import Category from "./Category";
+import AttributeMenu from "./AttributeMenu";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import "./SearchConsole.scss";
 
 const SearchConsole = ({ gender, type }) => {
-	const [categoryBtn, setCategoryBtn] = useState({ isOpen: false, name: "" });
-	const categoryButtons = useRef(null);
+	const [attributeBtn, setAttributeBtn] = useState({ isOpen: false, name: "" });
+	const attributeBtns = useRef(null); // el container for all attribute buttons
 
-	// close category window if user clicks outside of it
-	useCheckForClickOutside(categoryButtons, ".categories", categoryBtn, setCategoryBtn);
+	// close attribute window if user clicks outside of it
+	useCheckForClickOutside(attributeBtns, ".attributes", attributeBtn, setAttributeBtn);
 
-	//close category window on escape key press
-	useCloseWindowOnEsc(categoryBtn, setCategoryBtn);
+	//close attribute window on escape key press
+	useCloseWindowOnEsc(attributeBtn, setAttributeBtn);
 
-	// handles opening and closing of categories popup windows
-	const handleCategoryClick = (e, name) => {
-		if (categoryBtn.name !== name) {
-			setCategoryBtn({ isOpen: true, name: name });
+	// handles opening and closing of attributes popup windows
+	const handleAttributeBtnClick = (e, name) => {
+		if (attributeBtn.name !== name) {
+			setAttributeBtn({ isOpen: true, name: name });
 		} else {
-			setCategoryBtn({ isOpen: !categoryBtn.isOpen, name: name });
+			setAttributeBtn({ isOpen: !attributeBtn.isOpen, name: name });
 		}
 	};
 
@@ -31,80 +31,82 @@ const SearchConsole = ({ gender, type }) => {
 					<Link to="/">home</Link> / <Link to={`/${gender}`}>{gender}</Link>{" "}
 					{type && `/ ${type}`}
 				</div>
-				<div className="categories" ref={categoryButtons}>
-					<div className="category--wrapper">
+				<div className="attributes" ref={attributeBtns}>
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "katalog")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "katalog")}
 						>
 							Katalog
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "katalog" && <Category />}
+						{attributeBtn.isOpen && attributeBtn.name === "katalog" && (
+							<AttributeMenu />
+						)}
 					</div>
 
-					<div className="category--wrapper">
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "velikost")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "velikost")}
 						>
 							Velikost
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "velikost" && (
-							<Category type="velikost" />
+						{attributeBtn.isOpen && attributeBtn.name === "velikost" && (
+							<AttributeMenu type="velikost" />
 						)}
 					</div>
 
-					<div className="category--wrapper">
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "barva")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "barva")}
 						>
 							Barva
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "barva" && (
-							<Category type="barva" />
+						{attributeBtn.isOpen && attributeBtn.name === "barva" && (
+							<AttributeMenu type="barva" />
 						)}
 					</div>
 
-					<div className="category--wrapper">
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "znacka")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "znacka")}
 						>
 							Značka
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "znacka" && (
-							<Category type="znacka" />
+						{attributeBtn.isOpen && attributeBtn.name === "znacka" && (
+							<AttributeMenu type="znacka" />
 						)}
 					</div>
 
-					<div className="category--wrapper">
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "cena")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "cena")}
 						>
 							Cena
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "cena" && (
-							<Category type="cena" />
+						{attributeBtn.isOpen && attributeBtn.name === "cena" && (
+							<AttributeMenu type="cena" />
 						)}
 					</div>
 
-					<div className="category--wrapper">
+					<div className="attribute--wrapper">
 						<button
-							className="btn--category"
-							onClick={(e) => handleCategoryClick(e, "stav")}
+							className="btn--attribute"
+							onClick={(e) => handleAttributeBtnClick(e, "stav")}
 						>
 							Stav
 							<ArrowDownIcon />
 						</button>
-						{categoryBtn.isOpen && categoryBtn.name === "stav" && (
-							<Category type="stav" />
+						{attributeBtn.isOpen && attributeBtn.name === "stav" && (
+							<AttributeMenu type="stav" />
 						)}
 					</div>
 				</div>

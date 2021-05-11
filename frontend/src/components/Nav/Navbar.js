@@ -9,7 +9,7 @@ import { AppContext } from "../../context";
 const Navbar = () => {
 	const [catalog, setCatalog] = useState({ isOpen: false, name: "děti" });
 	const refLinks = useRef(null);
-	const { selectedCategories, setSelectedCategories } = useContext(AppContext);
+	const { selectedAttributes, setSelectedAttributes } = useContext(AppContext);
 
 	// close catalog window if user clicks outside of it
 	useCheckForClickOutside(refLinks, ".catalog", catalog, setCatalog);
@@ -35,14 +35,14 @@ const Navbar = () => {
 		setCatalog({ ...catalog, isOpen: false });
 
 		// update global context when clicked on item in catalog popup window
-		setSelectedCategories({
-			...selectedCategories,
+		setSelectedAttributes({
+			...selectedAttributes,
 			selectedPohlavi: catalog.name,
 			selectedTyp: type,
 		});
 	};
 
-	const categories = {
+	const attributes = {
 		ženy: [
 			"Doplňky",
 			"Kalhoty",
@@ -93,7 +93,7 @@ const Navbar = () => {
 				<div className={`catalog ${catalog.isOpen ? "is-shown" : ""}`}>
 					{/* Render types for catalog popup */}
 					<ul>
-						{categories[catalog.name].map((type, index) => {
+						{attributes[catalog.name].map((type, index) => {
 							return (
 								<li key={index}>
 									<Link

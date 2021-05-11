@@ -10,7 +10,7 @@ const Card = ({ product }) => {
 			<div className="content">
 				<header>
 					<Link
-						to={`/${getURLfriendlyString(product.category)}/${getURLfriendlyString(
+						to={`/${getURLfriendlyString(product.attribute)}/${getURLfriendlyString(
 							product.type
 						)}/${product.id}`}
 					>

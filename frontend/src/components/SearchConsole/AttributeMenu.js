@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import "./Category.scss";
+import "./AttributeMenu.scss";
 import { AppContext } from "../../context";
 import { colorArr, brands, stavOptions, velikosti, druhy } from "../../data";
 import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 
-const Category = ({ type }) => {
-	const { selectedCategories, setSelectedCategories } = useContext(AppContext);
+const AttributeMenu = ({ type }) => {
+	const { selectedAttributes, setSelectedAttributes } = useContext(AppContext);
 	const [znackyVyber, setZnackyVyber] = useState([brands]);
 	const [znackaInput, setZnackaInput] = useState("");
 	const [cena, setCena] = useState({ od: "", do: "" });
@@ -26,7 +26,7 @@ const Category = ({ type }) => {
 	}, [znackaInput]);
 
 	const getCurrencyFormat = (value) => {
-		const convertedValue = Number(value.replace(/\D/g, ""));
+		const convertedValue = Number(value.replace(/\D/g, "")); // converts user input to number (regex removes all non-digit chars)
 
 		if (convertedValue) {
 			return convertedValue.toLocaleString("cs-CS", { currency: "CZK" });
@@ -40,17 +40,17 @@ const Category = ({ type }) => {
 
 		if (e.target.checked) {
 			// if checked add to state
-			setSelectedCategories({
-				...selectedCategories,
-				[typeSelected]: [...selectedCategories[typeSelected], value],
+			setSelectedAttributes({
+				...selectedAttributes,
+				[typeSelected]: [...selectedAttributes[typeSelected], value],
 			});
 		} else {
 			// if unchecked remove from state
-			const filteredArray = selectedCategories[typeSelected].filter(
+			const filteredArray = selectedAttributes[typeSelected].filter(
 				(selected) => selected !== value
 			);
-			setSelectedCategories({
-				...selectedCategories,
+			setSelectedAttributes({
+				...selectedAttributes,
 				[typeSelected]: [...filteredArray],
 			});
 		}
@@ -59,7 +59,7 @@ const Category = ({ type }) => {
 	// BARVY
 	if (type === "barva") {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				{colorArr.map((barva, index) => {
 					return (
 						<div className="row" key={index}>
@@ -71,7 +71,7 @@ const Category = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "barva", barva.name);
 									}}
-									checked={selectedCategories.selectedBarva.includes(barva.name)}
+									checked={selectedAttributes.selectedBarva.includes(barva.name)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--color-${index}`} className="checkmark">
@@ -93,7 +93,7 @@ const Category = ({ type }) => {
 
 	if (type === "znacka") {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				<div className="row">
 					<input
 						type="text"
@@ -114,7 +114,7 @@ const Category = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "znacka", brand);
 									}}
-									checked={selectedCategories.selectedZnacka.includes(brand)}
+									checked={selectedAttributes.selectedZnacka.includes(brand)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--brand-${index}`} className="checkmark">
@@ -131,7 +131,7 @@ const Category = ({ type }) => {
 	// CENA
 	if (type === "cena") {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				<div className="row">
 					<input
 						type="text"
@@ -171,7 +171,7 @@ const Category = ({ type }) => {
 	// VELIKOSTI
 	if (type === "velikost") {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				{velikosti.map((velikost, index) => {
 					return (
 						<div className="row" key={index}>
@@ -183,7 +183,7 @@ const Category = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "velikost", velikost);
 									}}
-									checked={selectedCategories.selectedVelikost.includes(velikost)}
+									checked={selectedAttributes.selectedVelikost.includes(velikost)}
 									hidden
 								/>
 								<label
@@ -203,7 +203,7 @@ const Category = ({ type }) => {
 	// STAV
 	if (type === "stav") {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				{stavOptions.map((option, index) => {
 					return (
 						<div className="row" key={index}>
@@ -215,7 +215,7 @@ const Category = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "stav", option);
 									}}
-									checked={selectedCategories.selectedStav.includes(option)}
+									checked={selectedAttributes.selectedStav.includes(option)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
@@ -231,7 +231,7 @@ const Category = ({ type }) => {
 
 	if (!gender) {
 		return (
-			<div className="Category">
+			<div className="AttributeMenu">
 				<div className="row pointer" onClick={() => setGender("ženy")}>
 					<p>Ženy</p>
 					<ArrowRightIcon />
@@ -255,11 +255,11 @@ const Category = ({ type }) => {
 	}
 };
 
-export default Category;
+export default AttributeMenu;
 
 const Druhy = ({ druhy, setGender }) => {
 	return (
-		<div className="Category">
+		<div className="AttributeMenu">
 			<div className="row pointer" onClick={() => setGender("")}>
 				<div className="flex">
 					<ArrowLeftIcon />

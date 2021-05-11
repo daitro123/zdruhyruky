@@ -4,12 +4,12 @@ import SearchConsole from "../../components/SearchConsole/SearchConsole";
 import Tags from "../../components/Tags/Tags";
 
 const Selection = ({ match }) => {
-	const category = match.params.category;
 	const gender = match.params.gender;
+	const attribute = match.params.attribute;
 
 	return (
 		<>
-			<SearchConsole category={category} gender={gender} />
+			<SearchConsole gender={gender} attribute={attribute} />
 			<Tags gender={gender} />
 			<List />
 		</>

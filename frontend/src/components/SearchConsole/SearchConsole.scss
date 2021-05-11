@@ -5,7 +5,7 @@
 		background: $clr-orange;
 		padding: 2rem;
 
-		& .categories {
+		& .attributes {
 			display: flex;
 		}
 
@@ -15,7 +15,7 @@
 	}
 }
 
-.btn--category {
+.btn--attribute {
 	padding: 2rem;
 	display: flex;
 	align-items: center;

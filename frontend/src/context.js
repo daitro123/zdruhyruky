@@ -4,7 +4,7 @@ export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
 	const [products, setProducts] = useState([]);
-	const [selectedCategories, setSelectedCategories] = useState({
+	const [selectedAttributes, setSelectedAttributes] = useState({
 		selectedPohlavi: "",
 		selectedTyp: [],
 		selectedVelikost: [],
@@ -17,7 +17,7 @@ export const AppProvider = ({ children }) => {
 
 	return (
 		<AppContext.Provider
-			value={{ setProducts, setSelectedCategories, products, selectedCategories }}
+			value={{ setProducts, setSelectedAttributes, products, selectedAttributes }}
 		>
 			{children}
 		</AppContext.Provider>

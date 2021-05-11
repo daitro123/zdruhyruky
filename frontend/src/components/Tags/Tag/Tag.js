@@ -3,20 +3,20 @@ import "./Tag.scss";
 import { AppContext } from "../../../context";
 import { IconX } from "../../Icons/Icons";
 
-const Tag = ({ text, category }) => {
-	const { selectedCategories, setSelectedCategories } = useContext(AppContext);
+const Tag = ({ text, attribute }) => {
+	const { selectedAttributes, setSelectedAttributes } = useContext(AppContext);
 
 	const handleRemoveTag = (e, type, value) => {
-		if (Array.isArray(selectedCategories[type])) {
-			const filteredArray = selectedCategories[type].filter((selected) => selected !== value);
-			setSelectedCategories({ ...selectedCategories, [type]: filteredArray });
+		if (Array.isArray(selectedAttributes[type])) {
+			const filteredArray = selectedAttributes[type].filter((selected) => selected !== value);
+			setSelectedAttributes({ ...selectedAttributes, [type]: filteredArray });
 		} else {
-			setSelectedCategories({ ...selectedCategories, [type]: "" }); // empty string if single option
+			setSelectedAttributes({ ...selectedAttributes, [type]: "" }); // empty string if single option
 		}
 	};
 
 	return (
-		<div className="Tag" onClick={(e) => handleRemoveTag(e, category, text)}>
+		<div className="Tag" onClick={(e) => handleRemoveTag(e, attribute, text)}>
 			<p>{text}</p>
 			<IconX />
 		</div>

@@ -7,7 +7,7 @@ const data = {
 			condition: "Nový s visačkou",
 			color: "silver, grey",
 			price: 125,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Blůza",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
@@ -25,7 +25,7 @@ const data = {
 			condition: "Nový s visačkou",
 			color: "silver, grey",
 			price: 160,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Triko",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
@@ -43,7 +43,7 @@ const data = {
 			condition: "Velmi dobrý",
 			color: "silver, grey",
 			price: 150,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Blůza",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
@@ -61,7 +61,7 @@ const data = {
 			condition: "Nový s visačkou",
 			color: "silver, grey",
 			price: 250,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Kalhoty",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
@@ -79,7 +79,7 @@ const data = {
 			condition: "Velmi dobrý",
 			color: "silver, grey",
 			price: 325,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Kalhoty",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
@@ -97,7 +97,7 @@ const data = {
 			condition: "Velmi dobrý",
 			color: "silver, grey",
 			price: 180,
-			category: "Ženy",
+			attribute: "Ženy",
 			type: "Bunda",
 			images: [
 				"https://cdn.sanasport.cz/images/e_products/80/80139/1280x1280_1015-00340-3521_main_60441.jpg",
