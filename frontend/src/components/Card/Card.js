@@ -1,6 +1,6 @@
 import React from "react";
 import "./Card.scss";
-import getURLfriendlyString from "../../utils";
+import { getURLfriendlyString } from "../../utils";
 import { HeartIcon } from "../Icons/Icons";
 import { Link } from "react-router-dom";
 

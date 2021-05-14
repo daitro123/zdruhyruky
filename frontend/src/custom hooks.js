@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const useFetch = (url, options) => {
 	const [response, setResponse] = useState(null);
@@ -45,3 +46,7 @@ export const useCloseWindowOnEsc = (state, setState) => {
 		};
 	}, [state]);
 };
+
+export function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}

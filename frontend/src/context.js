@@ -1,24 +1,54 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer, useState } from "react";
 
 export const AppContext = createContext();
 
+const initState = {
+	katalog: [],
+	velikost: [],
+	barva: [],
+	znacka: [],
+	cenaOd: "",
+	cenaDo: "",
+	stav: [],
+};
+
+export const reducer = (state, action) => {
+	switch (action.type) {
+		case "ADD":
+			if (Array.isArray(action.value)) {
+				return {
+					...state,
+					[action.attributeType]: [...state[action.attributeType], ...action.value],
+				};
+			}
+			return {
+				...state,
+				[action.attributeType]: [...state[action.attributeType], action.value],
+			};
+
+		case "REMOVE":
+			let newArr = state[action.attributeType].filter((item) => item !== action.value);
+			return {
+				...state,
+				[action.attributeType]: newArr,
+			};
+
+		case "SET_PRICE":
+			return {
+				...state,
+				[action.attributeType]: action.value,
+			};
+		default:
+			break;
+	}
+};
+
 export const AppProvider = ({ children }) => {
 	const [products, setProducts] = useState([]);
-	const [selectedAttributes, setSelectedAttributes] = useState({
-		selectedPohlavi: "",
-		selectedTyp: [],
-		selectedVelikost: [],
-		selectedBarva: [],
-		selectedZnacka: [],
-		selectedCenaOd: "",
-		selectedCenaDo: "",
-		selectedStav: [],
-	});
+	const [state, dispatch] = useReducer(reducer, initState);
 
 	return (
-		<AppContext.Provider
-			value={{ setProducts, setSelectedAttributes, products, selectedAttributes }}
-		>
+		<AppContext.Provider value={{ state, dispatch, products, setProducts }}>
 			{children}
 		</AppContext.Provider>
 	);

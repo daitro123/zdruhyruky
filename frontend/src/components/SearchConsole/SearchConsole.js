@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ArrowDownIcon } from "../Icons/Icons";
 import AttributeMenu from "./AttributeMenu";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import "./SearchConsole.scss";
 
-const SearchConsole = ({ gender, type }) => {
+const SearchConsole = () => {
+	const { pohlavi, druh } = useParams();
 	const [attributeBtn, setAttributeBtn] = useState({ isOpen: false, name: "" });
 	const attributeBtns = useRef(null); // el container for all attribute buttons
 
@@ -28,8 +29,8 @@ const SearchConsole = ({ gender, type }) => {
 		<div className="SearchConsole container">
 			<div className="console">
 				<div className="breadcrumbs">
-					<Link to="/">home</Link> / <Link to={`/${gender}`}>{gender}</Link>{" "}
-					{type && `/ ${type}`}
+					<Link to="/">home</Link> / <Link to={`/${pohlavi}`}>{pohlavi}</Link>{" "}
+					{druh && `/ ${druh}`}
 				</div>
 				<div className="attributes" ref={attributeBtns}>
 					<div className="attribute--wrapper">
@@ -54,7 +55,7 @@ const SearchConsole = ({ gender, type }) => {
 							<ArrowDownIcon />
 						</button>
 						{attributeBtn.isOpen && attributeBtn.name === "velikost" && (
-							<AttributeMenu type="velikost" />
+							<AttributeMenu attributeType="velikost" />
 						)}
 					</div>
 
@@ -67,7 +68,7 @@ const SearchConsole = ({ gender, type }) => {
 							<ArrowDownIcon />
 						</button>
 						{attributeBtn.isOpen && attributeBtn.name === "barva" && (
-							<AttributeMenu type="barva" />
+							<AttributeMenu attributeType="barva" />
 						)}
 					</div>
 
@@ -80,7 +81,7 @@ const SearchConsole = ({ gender, type }) => {
 							<ArrowDownIcon />
 						</button>
 						{attributeBtn.isOpen && attributeBtn.name === "znacka" && (
-							<AttributeMenu type="znacka" />
+							<AttributeMenu attributeType="znacka" />
 						)}
 					</div>
 
@@ -93,7 +94,7 @@ const SearchConsole = ({ gender, type }) => {
 							<ArrowDownIcon />
 						</button>
 						{attributeBtn.isOpen && attributeBtn.name === "cena" && (
-							<AttributeMenu type="cena" />
+							<AttributeMenu attributeType="cena" />
 						)}
 					</div>
 
@@ -106,7 +107,7 @@ const SearchConsole = ({ gender, type }) => {
 							<ArrowDownIcon />
 						</button>
 						{attributeBtn.isOpen && attributeBtn.name === "stav" && (
-							<AttributeMenu type="stav" />
+							<AttributeMenu attributeType="stav" />
 						)}
 					</div>
 				</div>

@@ -57,11 +57,228 @@ const barvy = {
 	žlutá: "#FFFF00",
 };
 
-export let colorArr = [];
-
-for (const barva in barvy) {
-	colorArr.push({ name: barva.split("_").join(" "), hex: barvy[barva] });
-}
+export let colorArr = [
+	{
+		name: "aqua",
+		hex: "#00FFFF",
+	},
+	{
+		name: "Khaki",
+		hex: "#4B5320",
+	},
+	{
+		name: "světlá královsky modrá",
+		hex: "#007FFF",
+	},
+	{
+		name: "bílá",
+		hex: "#FFFFFF",
+	},
+	{
+		name: "bronzová",
+		hex: "#CD7F32",
+	},
+	{
+		name: "burgundská",
+		hex: "#900020",
+	},
+	{
+		name: "cyanová",
+		hex: "#00FFFF",
+	},
+	{
+		name: "čokoládově hnědá",
+		hex: "#7B3F00",
+	},
+	{
+		name: "černá",
+		hex: "#000000",
+	},
+	{
+		name: "červená",
+		hex: "#FF0000",
+	},
+	{
+		name: "egyptská modř",
+		hex: "#1034A6",
+	},
+	{
+		name: "fialová",
+		hex: "#50007F",
+	},
+	{
+		name: "hnědá",
+		hex: "#964B00",
+	},
+	{
+		name: "indigová",
+		hex: "#4B0082",
+	},
+	{
+		name: "muslimská zeleň",
+		hex: "#009000",
+	},
+	{
+		name: "jadeová",
+		hex: "#00A86B",
+	},
+	{
+		name: "jantarová",
+		hex: "#FFBF00",
+	},
+	{
+		name: "béžová",
+		hex: "#C3B091",
+	},
+	{
+		name: "světle žlutá",
+		hex: "#F0E68C",
+	},
+	{
+		name: "kobaltová",
+		hex: "#0047AB",
+	},
+	{
+		name: "korálová",
+		hex: "#FF7F50",
+	},
+	{
+		name: "krémová",
+		hex: "#FFFDD0",
+	},
+	{
+		name: "lasturová",
+		hex: "#FFF5EE",
+	},
+	{
+		name: "lesní zeleň",
+		hex: "#228B22",
+	},
+	{
+		name: "levandulová",
+		hex: "#E6E6FA",
+	},
+	{
+		name: "levandulová zčervenalá",
+		hex: "#FFF0F5",
+	},
+	{
+		name: "lněná",
+		hex: "#FAF0E6",
+	},
+	{
+		name: "lososová",
+		hex: "#FA8072",
+	},
+	{
+		name: "magenta",
+		hex: "#FF00FF",
+	},
+	{
+		name: "meruňková",
+		hex: "#FBCEB1",
+	},
+	{
+		name: "mayská modř",
+		hex: "#73C2FB",
+	},
+	{
+		name: "modrá",
+		hex: "#0000FF",
+	},
+	{
+		name: "nachová",
+		hex: "#D66984",
+	},
+	{
+		name: "navajová bílá",
+		hex: "#FFDEAD",
+	},
+	{
+		name: "nebesky modrá",
+		hex: "#87CEEB",
+	},
+	{
+		name: "námořní modř",
+		hex: "#000080",
+	},
+	{
+		name: "oranžová",
+		hex: "#FF8000",
+	},
+	{
+		name: "orchideová",
+		hex: "#DA70D6",
+	},
+	{
+		name: "půlnoční modř",
+		hex: "#003366",
+	},
+	{
+		name: "purpurová",
+		hex: "#FF00FF",
+	},
+	{
+		name: "rajčatová",
+		hex: "#FF6347",
+	},
+	{
+		name: "růžová",
+		hex: "#FFC0CB",
+	},
+	{
+		name: "siena",
+		hex: "#882D17",
+	},
+	{
+		name: "středně zelená",
+		hex: "#008000",
+	},
+	{
+		name: "stříbrná",
+		hex: "#C0C0C0",
+	},
+	{
+		name: "šedá",
+		hex: "#808080",
+	},
+	{
+		name: "tmavě hnědá",
+		hex: "#654321",
+	},
+	{
+		name: "tmavě modrá",
+		hex: "#00008B",
+	},
+	{
+		name: "tmavě zelená",
+		hex: "#008000",
+	},
+	{
+		name: "ultramarínová",
+		hex: "#120A8F",
+	},
+	{
+		name: "rumělková",
+		hex: "#E34234",
+	},
+	{
+		name: "viridianová",
+		hex: "#40826D",
+	},
+	{
+		name: "zelená",
+		hex: "#00FF00",
+	},
+	{
+		name: "zlatá",
+		hex: "#FFD700",
+	},
+	{
+		name: "žlutá",
+		hex: "#FFFF00",
+	},
+];
 
 export const stavOptions = [
 	"Nový s visačkou",
@@ -73,78 +290,328 @@ export const stavOptions = [
 
 export const velikosti = ["XS", "S", "M", "L", "XL", "XXL"];
 
-export const druhy = {
-	ženy: [
-		"kalhotky",
-		"podprsenka",
-		"kombiné",
-		"top",
-		"body",
-		"tílko",
-		"košilka",
-		"punčochy",
-		"ponožky",
-		"tričko",
-		"plavky",
-		"overal",
-		"šaty",
-		"sukně",
-		"tunika",
-		"kalhoty",
-		"džíny",
-		"šortky",
-		"kostým",
-		"sako",
-		"bunda",
-		"kabát, kožich",
-		"blůzka, halenka",
-		"svetr, rolák, pulovr",
-		"mikina",
-		"vesta",
-		"Doplňky",
-		"pyžamo",
-		"noční košile",
-	],
-	muži: [
-		"tílko",
-		"tričko",
-		"košile",
-		"spodní prádlo",
-		"plavky",
-		"svetr",
-		"pulovr",
-		"rolák",
-		"mikina",
-		"kalhoty",
-		"šortky",
-		"džíny",
-		"tepláky",
-		"sako",
-		"vesta",
-		"oblek",
-		"bunda",
-		"kabát",
-		"plášť",
-		"Doplňky",
-		"boty",
-		"pyžamo",
-		"noční košile",
-	],
-	děti: [
-		"Capáčky",
-		"Body",
-		"Dupačky",
-		"Polodupačky",
-		"Overaly",
-		"Soupravy",
-		"Bundy, kabátky",
-		"Trička",
-		"Kalhoty",
-		"Sukně, Šatičky",
-		"Mikiny",
-		"Svetry",
-	],
-};
+export const katalogArr = [
+	{
+		pohlavi: "ženy",
+		druh: "kalhotky",
+		katalogID: "100",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "podprsenka",
+		katalogID: "101",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "kombiné",
+		katalogID: "102",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "top",
+		katalogID: "103",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "body",
+		katalogID: "104",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "tílko",
+		katalogID: "105",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "košilka",
+		katalogID: "106",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "punčochy",
+		katalogID: "107",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "ponožky",
+		katalogID: "108",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "tričko",
+		katalogID: "109",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "plavky",
+		katalogID: "110",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "overal",
+		katalogID: "111",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "šaty",
+		katalogID: "112",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "sukně",
+		katalogID: "113",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "tunika",
+		katalogID: "114",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "kalhoty",
+		katalogID: "115",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "džíny",
+		katalogID: "116",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "šortky",
+		katalogID: "117",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "kostým",
+		katalogID: "118",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "sako",
+		katalogID: "119",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "bunda",
+		katalogID: "120",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "kabát, kožich",
+		katalogID: "121",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "blůzka, halenka",
+		katalogID: "122",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "svetr, rolák, pulovr",
+		katalogID: "123",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "mikina",
+		katalogID: "124",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "vesta",
+		katalogID: "125",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "doplňky",
+		katalogID: "126",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "pyžamo",
+		katalogID: "127",
+	},
+	{
+		pohlavi: "ženy",
+		druh: "noční košile",
+		katalogID: "128",
+	},
+	{
+		pohlavi: "muži",
+		druh: "tílko",
+		katalogID: "200",
+	},
+	{
+		pohlavi: "muži",
+		druh: "tričko",
+		katalogID: "201",
+	},
+	{
+		pohlavi: "muži",
+		druh: "košile",
+		katalogID: "202",
+	},
+	{
+		pohlavi: "muži",
+		druh: "spodní prádlo",
+		katalogID: "203",
+	},
+	{
+		pohlavi: "muži",
+		druh: "plavky",
+		katalogID: "204",
+	},
+	{
+		pohlavi: "muži",
+		druh: "svetr",
+		katalogID: "205",
+	},
+	{
+		pohlavi: "muži",
+		druh: "pulovr",
+		katalogID: "206",
+	},
+	{
+		pohlavi: "muži",
+		druh: "rolák",
+		katalogID: "207",
+	},
+	{
+		pohlavi: "muži",
+		druh: "mikina",
+		katalogID: "208",
+	},
+	{
+		pohlavi: "muži",
+		druh: "kalhoty",
+		katalogID: "209",
+	},
+	{
+		pohlavi: "muži",
+		druh: "šortky",
+		katalogID: "210",
+	},
+	{
+		pohlavi: "muži",
+		druh: "džíny",
+		katalogID: "211",
+	},
+	{
+		pohlavi: "muži",
+		druh: "tepláky",
+		katalogID: "212",
+	},
+	{
+		pohlavi: "muži",
+		druh: "sako",
+		katalogID: "213",
+	},
+	{
+		pohlavi: "muži",
+		druh: "vesta",
+		katalogID: "214",
+	},
+	{
+		pohlavi: "muži",
+		druh: "oblek",
+		katalogID: "215",
+	},
+	{
+		pohlavi: "muži",
+		druh: "bunda",
+		katalogID: "216",
+	},
+	{
+		pohlavi: "muži",
+		druh: "kabát",
+		katalogID: "217",
+	},
+	{
+		pohlavi: "muži",
+		druh: "plášť",
+		katalogID: "218",
+	},
+	{
+		pohlavi: "muži",
+		druh: "doplňky",
+		katalogID: "219",
+	},
+	{
+		pohlavi: "muži",
+		druh: "boty",
+		katalogID: "220",
+	},
+	{
+		pohlavi: "muži",
+		druh: "pyžamo",
+		katalogID: "221",
+	},
+	{
+		pohlavi: "muži",
+		druh: "noční košile",
+		katalogID: "222",
+	},
+	{
+		pohlavi: "děti",
+		druh: "capáčky",
+		katalogID: "300",
+	},
+	{
+		pohlavi: "děti",
+		druh: "body",
+		katalogID: "301",
+	},
+	{
+		pohlavi: "děti",
+		druh: "dupačky",
+		katalogID: "302",
+	},
+	{
+		pohlavi: "děti",
+		druh: "polodupačky",
+		katalogID: "303",
+	},
+	{
+		pohlavi: "děti",
+		druh: "overaly",
+		katalogID: "304",
+	},
+	{
+		pohlavi: "děti",
+		druh: "soupravy",
+		katalogID: "305",
+	},
+	{
+		pohlavi: "děti",
+		druh: "bundy, kabátky",
+		katalogID: "306",
+	},
+	{
+		pohlavi: "děti",
+		druh: "trička",
+		katalogID: "307",
+	},
+	{
+		pohlavi: "děti",
+		druh: "kalhoty",
+		katalogID: "308",
+	},
+	{
+		pohlavi: "děti",
+		druh: "sukně, šatičky",
+		katalogID: "309",
+	},
+	{
+		pohlavi: "děti",
+		druh: "mikiny",
+		katalogID: "310",
+	},
+	{
+		pohlavi: "děti",
+		druh: "svetry",
+		katalogID: "311",
+	},
+];
 
 export const brands = [
 	"LUGGI",

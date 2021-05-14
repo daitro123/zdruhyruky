@@ -5,11 +5,10 @@ import Navbar from "./components/Nav/Navbar";
 import Home from "./pages/Home/Home";
 import Error from "./pages/Error/Error";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
-import SearchConsole from "./components/SearchConsole/SearchConsole";
-import Selection from "./pages/Selection/Selection";
+import SelectionPage from "./pages/SelectionPage/SelectionPage";
 
 function App() {
 	return (
@@ -20,9 +19,10 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/registration" component={Registration} />
-					<Route path={"/:gender/:type/:id"} component={SingleProduct} />
-					<Route path="/:gender/:type" component={Selection} />
-					<Route path="/:gender" component={Selection} />
+					<Route path="/predmety" component={SelectionPage} />
+					<Route path={"/:pohlavi/:druh/:id"} component={SingleProduct} />
+					<Route path="/:pohlavi/:druh" component={SelectionPage} />
+					<Route path="/:pohlavi" component={SelectionPage} />
 					<Route path="/*" component={Error} />
 				</Switch>
 			</Router>

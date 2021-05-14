@@ -1,4 +1,4 @@
-const getURLfriendlyString = (string) => {
+export const getURLfriendlyString = (string) => {
 	return string
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "")
@@ -7,4 +7,11 @@ const getURLfriendlyString = (string) => {
 		.join("-");
 };
 
-export default getURLfriendlyString;
+export const removeQueryFromURL = (history, queryName) => {
+	const params = new URLSearchParams(history.location.search);
+	params.delete(queryName);
+	history.push({
+		pathname: "/predmety",
+		search: params.toString(),
+	});
+};

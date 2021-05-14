@@ -1,61 +1,33 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import getURLfriendlyString from "../../utils";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
+import { katalogArr } from "../../data";
 import "./Navbar.scss";
-import { AppContext } from "../../context";
 
 const Navbar = () => {
-	const [catalog, setCatalog] = useState({ isOpen: false, name: "děti" });
+	const [catalogList, setCatalogList] = useState({ isOpen: false, name: "děti" });
 	const refLinks = useRef(null);
-	const { selectedAttributes, setSelectedAttributes } = useContext(AppContext);
 
 	// close catalog window if user clicks outside of it
-	useCheckForClickOutside(refLinks, ".catalog", catalog, setCatalog);
+	useCheckForClickOutside(refLinks, ".catalog", catalogList, setCatalogList);
 
 	// close popup catalog window on escape key press
-	useCloseWindowOnEsc(catalog, setCatalog);
+	useCloseWindowOnEsc(catalogList, setCatalogList);
 
 	// handles opening and closing of catalog popup, also position of the catalog window
 	const handleOpenCatalog = (e, name) => {
-		if (catalog.name !== name) {
-			setCatalog({ isOpen: true, name: name });
+		if (catalogList.name !== name) {
+			setCatalogList({ isOpen: true, name: name });
 		} else {
-			setCatalog({ isOpen: !catalog.isOpen, name: name });
+			setCatalogList({ isOpen: !catalogList.isOpen, name: name });
 		}
 
 		//move position of catalog
 		const ulXPos = refLinks.current.getBoundingClientRect().x;
 		const linkXPos = e.target.getBoundingClientRect().x;
 		document.querySelector(".catalog").style.transform = `translateX(${linkXPos - ulXPos}px)`;
-	};
-
-	const handleSelection = (type) => {
-		setCatalog({ ...catalog, isOpen: false });
-
-		// update global context when clicked on item in catalog popup window
-		setSelectedAttributes({
-			...selectedAttributes,
-			selectedPohlavi: catalog.name,
-			selectedTyp: type,
-		});
-	};
-
-	const attributes = {
-		ženy: [
-			"Doplňky",
-			"Kalhoty",
-			"Trika",
-			"Košile",
-			"Overaly",
-			"Spodní prádlo",
-			"Sportovní oblečení",
-			"Kostými a saka",
-			"Kraťasy",
-		],
-		muži: ["Kalhoty", "Doplňky", "Trika", "Košile"],
-		děti: ["Mikiny"],
 	};
 
 	return (
@@ -73,40 +45,49 @@ const Navbar = () => {
 				<ul className="catalog-links" ref={refLinks}>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "ženy")}
-						className={catalog.isOpen && catalog.name === "ženy" ? "catalog-shown" : ""}
+						className={
+							catalogList.isOpen && catalogList.name === "ženy" ? "catalog-shown" : ""
+						}
 					>
 						ženy
 					</li>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "muži")}
-						className={catalog.isOpen && catalog.name === "muži" ? "catalog-shown" : ""}
+						className={
+							catalogList.isOpen && catalogList.name === "muži" ? "catalog-shown" : ""
+						}
 					>
 						muži
 					</li>
 					<li
 						onClick={(e) => handleOpenCatalog(e, "děti")}
-						className={catalog.isOpen && catalog.name === "děti" ? "catalog-shown" : ""}
+						className={
+							catalogList.isOpen && catalogList.name === "děti" ? "catalog-shown" : ""
+						}
 					>
 						děti
 					</li>
 				</ul>
-				<div className={`catalog ${catalog.isOpen ? "is-shown" : ""}`}>
+				<div className={`catalog ${catalogList.isOpen ? "is-shown" : ""}`}>
 					{/* Render types for catalog popup */}
 					<ul>
-						{attributes[catalog.name].map((type, index) => {
-							return (
-								<li key={index}>
-									<Link
-										to={`/${getURLfriendlyString(
-											catalog.name
-										)}/${getURLfriendlyString(type)}`}
-										onClick={(e) => handleSelection(type)}
-									>
-										{type}
-									</Link>
-								</li>
-							);
-						})}
+						{katalogArr
+							.filter((katalog) => katalog.pohlavi === catalogList.name) // filter gender catalogs
+							.slice(0, 10) // limit size of catalogList to 10 items
+							.map((katalog, index) => {
+								return (
+									<li key={index}>
+										<Link
+											to={`/predmety?katalog=${katalog.katalogID}`}
+											onClick={() =>
+												setCatalogList({ ...catalogList, isOpen: false })
+											}
+										>
+											{katalog.druh}
+										</Link>
+									</li>
+								);
+							})}
 					</ul>
 				</div>
 				<ul>

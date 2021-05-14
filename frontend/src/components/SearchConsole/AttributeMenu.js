@@ -1,20 +1,28 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./AttributeMenu.scss";
 import { AppContext } from "../../context";
-import { colorArr, brands, stavOptions, velikosti, druhy } from "../../data";
+import { useHistory } from "react-router";
+import { colorArr, brands, stavOptions, velikosti, katalogArr } from "../../data";
 import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 
-const AttributeMenu = ({ type }) => {
-	const { selectedAttributes, setSelectedAttributes } = useContext(AppContext);
-	const [znackyVyber, setZnackyVyber] = useState([brands]);
-	const [znackaInput, setZnackaInput] = useState("");
-	const [cena, setCena] = useState({ od: "", do: "" });
+const AttributeMenu = ({ attributeType }) => {
+	const { state, dispatch } = useContext(AppContext);
+	const history = useHistory();
 	const [gender, setGender] = useState("");
 
+	// state for rendering brands in popup menu
+	const [znackyVyber, setZnackyVyber] = useState([brands]);
+	const [znackaInput, setZnackaInput] = useState("");
+
+	// controlled input for setting price
+	const [cena, setCena] = useState({ od: "", do: "" });
+
 	useEffect(() => {
+		//initial render will show first 10 brands from array
 		if (!znackaInput) {
 			setZnackyVyber(brands.slice(0, 10));
 		} else {
+			// if user types, it filters matching brands
 			setZnackyVyber(
 				brands.filter(
 					(brand) =>
@@ -25,8 +33,9 @@ const AttributeMenu = ({ type }) => {
 		}
 	}, [znackaInput]);
 
+	// converts price input to correct local format
 	const getCurrencyFormat = (value) => {
-		const convertedValue = Number(value.replace(/\D/g, "")); // converts user input to number (regex removes all non-digit chars)
+		const convertedValue = Number(value.replace(/\D/g, "")); // converts to number (regex removes all non-digit chars)
 
 		if (convertedValue) {
 			return convertedValue.toLocaleString("cs-CS", { currency: "CZK" });
@@ -35,29 +44,32 @@ const AttributeMenu = ({ type }) => {
 		}
 	};
 
-	const handleCheckbox = (e, type, value) => {
-		const typeSelected = `selected${type[0].toUpperCase() + type.slice(1)}`; // get the correct Obj.key of state (selected...: value)
-
+	// adds or removes selected (checked) attribute to/from context
+	const handleCheckbox = (e, attribute, value) => {
 		if (e.target.checked) {
-			// if checked add to state
-			setSelectedAttributes({
-				...selectedAttributes,
-				[typeSelected]: [...selectedAttributes[typeSelected], value],
+			dispatch({ type: "ADD", attributeType: attribute, value: value });
+			history.push({
+				pathname: "/predmety",
+				search:
+					history.location.search +
+					"&" +
+					new URLSearchParams({ [attribute]: value }).toString(),
 			});
 		} else {
-			// if unchecked remove from state
-			const filteredArray = selectedAttributes[typeSelected].filter(
-				(selected) => selected !== value
-			);
-			setSelectedAttributes({
-				...selectedAttributes,
-				[typeSelected]: [...filteredArray],
-			});
+			dispatch({ type: "REMOVE", attributeType: attribute, value: value });
+		}
+	};
+
+	const handleSetPrice = (e, attribute, value) => {
+		if (e.keyCode === 13) {
+			dispatch({ type: "SET_PRICE", attributeType: attribute, value: value });
+
+			// setSelectedAttributes({ ...selectedAttributes, [attribute]: `${value}` });
 		}
 	};
 
 	// BARVY
-	if (type === "barva") {
+	if (attributeType === "barva") {
 		return (
 			<div className="AttributeMenu">
 				{colorArr.map((barva, index) => {
@@ -71,7 +83,7 @@ const AttributeMenu = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "barva", barva.name);
 									}}
-									checked={selectedAttributes.selectedBarva.includes(barva.name)}
+									checked={state.barva.includes(barva.name)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--color-${index}`} className="checkmark">
@@ -91,7 +103,7 @@ const AttributeMenu = ({ type }) => {
 
 	// ZNACKY
 
-	if (type === "znacka") {
+	if (attributeType === "znacka") {
 		return (
 			<div className="AttributeMenu">
 				<div className="row">
@@ -114,7 +126,7 @@ const AttributeMenu = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "znacka", brand);
 									}}
-									checked={selectedAttributes.selectedZnacka.includes(brand)}
+									checked={state.znacka.includes(brand)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--brand-${index}`} className="checkmark">
@@ -129,7 +141,7 @@ const AttributeMenu = ({ type }) => {
 	}
 
 	// CENA
-	if (type === "cena") {
+	if (attributeType === "cena") {
 		return (
 			<div className="AttributeMenu">
 				<div className="row">
@@ -145,6 +157,7 @@ const AttributeMenu = ({ type }) => {
 								od: getCurrencyFormat(e.target.value),
 							})
 						}
+						onKeyDown={(e) => handleSetPrice(e, "cenaOd", cena.od)}
 					/>
 					<span>Kč</span>
 				</div>
@@ -161,6 +174,7 @@ const AttributeMenu = ({ type }) => {
 								do: getCurrencyFormat(e.target.value),
 							})
 						}
+						onKeyDown={(e) => handleSetPrice(e, "cenaDo", cena.do)}
 					/>
 					<span>Kč</span>
 				</div>
@@ -169,7 +183,7 @@ const AttributeMenu = ({ type }) => {
 	}
 
 	// VELIKOSTI
-	if (type === "velikost") {
+	if (attributeType === "velikost") {
 		return (
 			<div className="AttributeMenu">
 				{velikosti.map((velikost, index) => {
@@ -183,7 +197,7 @@ const AttributeMenu = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "velikost", velikost);
 									}}
-									checked={selectedAttributes.selectedVelikost.includes(velikost)}
+									checked={state.velikost.includes(velikost)}
 									hidden
 								/>
 								<label
@@ -201,7 +215,7 @@ const AttributeMenu = ({ type }) => {
 	}
 
 	// STAV
-	if (type === "stav") {
+	if (attributeType === "stav") {
 		return (
 			<div className="AttributeMenu">
 				{stavOptions.map((option, index) => {
@@ -215,7 +229,7 @@ const AttributeMenu = ({ type }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "stav", option);
 									}}
-									checked={selectedAttributes.selectedStav.includes(option)}
+									checked={state.stav.includes(option)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
@@ -246,18 +260,22 @@ const AttributeMenu = ({ type }) => {
 				</div>
 			</div>
 		);
-	} else if (gender === "ženy") {
-		return <Druhy druhy={druhy.ženy} setGender={setGender} />;
-	} else if (gender === "muži") {
-		return <Druhy druhy={druhy.muži} setGender={setGender} />;
-	} else if (gender === "děti") {
-		return <Druhy druhy={druhy.děti} setGender={setGender} />;
+	} else {
+		return (
+			<Druhy
+				katalogArr={katalogArr.filter((katalog) => katalog.pohlavi === gender)}
+				setGender={setGender}
+				state={state}
+				dispatch={dispatch}
+				handleCheckbox={handleCheckbox}
+			/>
+		);
 	}
 };
 
 export default AttributeMenu;
 
-const Druhy = ({ druhy, setGender }) => {
+const Druhy = ({ katalogArr, setGender, state, handleCheckbox }) => {
 	return (
 		<div className="AttributeMenu">
 			<div className="row pointer" onClick={() => setGender("")}>
@@ -266,18 +284,25 @@ const Druhy = ({ druhy, setGender }) => {
 					<p className="px-2">Zpět</p>
 				</div>
 			</div>
-			{druhy.map((option, index) => {
+			{katalogArr.map((katalog) => {
 				return (
-					<div className="row" key={index}>
+					<div className="row" key={katalog.katalogID}>
 						<div className="checkbox-wrapper">
 							<input
 								type="checkbox"
-								name={`checkbox--stav-${index}`}
-								id={`checkbox--stav-${index}`}
+								name={`checkbox--stav-${katalog.katalogID}`}
+								id={`checkbox--stav-${katalog.katalogID}`}
+								checked={state.katalog.includes(katalog.katalogID)}
+								onChange={(e) => {
+									handleCheckbox(e, "katalog", katalog.katalogID);
+								}}
 								hidden
 							/>
-							<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
-								{option}
+							<label
+								htmlFor={`checkbox--stav-${katalog.katalogID}`}
+								className="checkmark"
+							>
+								{katalog.druh}
 							</label>
 						</div>
 					</div>
