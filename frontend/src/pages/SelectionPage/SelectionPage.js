@@ -10,13 +10,12 @@ const SelectionPage = () => {
 	const { dispatch } = useContext(AppContext);
 
 	useEffect(() => {
+		dispatch({ type: "RESET" });
 		dispatch({ type: "ADD", attributeType: "katalog", value: query.getAll("katalog") });
 		dispatch({ type: "ADD", attributeType: "barva", value: query.getAll("barva") });
-		// setSelectedAttributes({
-		// 	...selectedAttributes,
-		// 	katalog: query.getAll("katalog"),
-		// 	barva: query.getAll("barva"),
-		// });
+		dispatch({ type: "ADD", attributeType: "velikost", value: query.getAll("velikost") });
+		dispatch({ type: "ADD", attributeType: "znacka", value: query.getAll("znacka") });
+		dispatch({ type: "ADD", attributeType: "stav", value: query.getAll("stav") });
 	}, []);
 
 	return (

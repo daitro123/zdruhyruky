@@ -1,14 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import getURLfriendlyString from "../../utils";
 import Search from "../Search/Search";
 import { Link } from "react-router-dom";
 import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks";
 import { katalogArr } from "../../data";
 import "./Navbar.scss";
+import { AppContext } from "../../context";
 
 const Navbar = () => {
 	const [catalogList, setCatalogList] = useState({ isOpen: false, name: "děti" });
 	const refLinks = useRef(null);
+	const { dispatch } = useContext(AppContext);
 
 	// close catalog window if user clicks outside of it
 	useCheckForClickOutside(refLinks, ".catalog", catalogList, setCatalogList);
@@ -79,9 +81,9 @@ const Navbar = () => {
 									<li key={index}>
 										<Link
 											to={`/predmety?katalog=${katalog.katalogID}`}
-											onClick={() =>
-												setCatalogList({ ...catalogList, isOpen: false })
-											}
+											onClick={() => {
+												setCatalogList({ ...catalogList, isOpen: false });
+											}}
 										>
 											{katalog.druh}
 										</Link>

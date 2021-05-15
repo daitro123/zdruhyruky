@@ -3,6 +3,7 @@ import "./AttributeMenu.scss";
 import { AppContext } from "../../context";
 import { useHistory } from "react-router";
 import { colorArr, brands, stavOptions, velikosti, katalogArr } from "../../data";
+import { removeQueryFromURL, removeAllQueriesFromURL, appendQueryToURL } from "../../utils";
 import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 
 const AttributeMenu = ({ attributeType }) => {
@@ -48,23 +49,23 @@ const AttributeMenu = ({ attributeType }) => {
 	const handleCheckbox = (e, attribute, value) => {
 		if (e.target.checked) {
 			dispatch({ type: "ADD", attributeType: attribute, value: value });
-			history.push({
-				pathname: "/predmety",
-				search:
-					history.location.search +
-					"&" +
-					new URLSearchParams({ [attribute]: value }).toString(),
-			});
+			appendQueryToURL(history, attribute, value);
 		} else {
 			dispatch({ type: "REMOVE", attributeType: attribute, value: value });
+			removeQueryFromURL(history, value);
 		}
 	};
 
 	const handleSetPrice = (e, attribute, value) => {
 		if (e.keyCode === 13) {
-			dispatch({ type: "SET_PRICE", attributeType: attribute, value: value });
-
-			// setSelectedAttributes({ ...selectedAttributes, [attribute]: `${value}` });
+			if (value) {
+				dispatch({ type: "SET_PRICE", attributeType: attribute, value: value });
+				removeAllQueriesFromURL(history, attribute); // have to remove the previous query first
+				appendQueryToURL(history, attribute, value);
+			} else {
+				dispatch({ type: "REMOVE_PRICE", attributeType: attribute });
+				removeAllQueriesFromURL(history, attribute);
+			}
 		}
 	};
 

@@ -28,10 +28,10 @@ const SearchConsole = () => {
 	return (
 		<div className="SearchConsole container">
 			<div className="console">
-				<div className="breadcrumbs">
+				{/* <div className="breadcrumbs">
 					<Link to="/">home</Link> / <Link to={`/${pohlavi}`}>{pohlavi}</Link>{" "}
 					{druh && `/ ${druh}`}
-				</div>
+				</div> */}
 				<div className="attributes" ref={attributeBtns}>
 					<div className="attribute--wrapper">
 						<button

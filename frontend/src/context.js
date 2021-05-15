@@ -15,6 +15,7 @@ const initState = {
 export const reducer = (state, action) => {
 	switch (action.type) {
 		case "ADD":
+			// SelectionPage adds array of queries from url with query.getAll()
 			if (Array.isArray(action.value)) {
 				return {
 					...state,
@@ -37,6 +38,16 @@ export const reducer = (state, action) => {
 			return {
 				...state,
 				[action.attributeType]: action.value,
+			};
+		case "REMOVE_PRICE":
+			return {
+				...state,
+				[action.attributeType]: "",
+			};
+
+		case "RESET":
+			return {
+				...initState,
 			};
 		default:
 			break;
