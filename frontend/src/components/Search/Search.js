@@ -6,7 +6,7 @@ const Search = () => {
 	const [input, setInput] = useState("");
 	const [searchTerm, setSearchTerm] = useState("");
 	const [placeholder, setPlaceholder] = useState("Hledat");
-	const { setProducts } = useContext(AppContext);
+	const { setPredmety } = useContext(AppContext);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -19,7 +19,7 @@ const Search = () => {
 				const response = await fetch("http://localhost:3100/items");
 				if (response.ok) {
 					const data = await response.json();
-					setProducts(data.result);
+					setPredmety(data.result);
 				} else {
 					throw new Error("Fetch has failed");
 				}
@@ -28,7 +28,7 @@ const Search = () => {
 			}
 		};
 		fetchProducts();
-	}, [searchTerm, setProducts]);
+	}, [searchTerm, setPredmety]);
 
 	return (
 		<div className="Search">

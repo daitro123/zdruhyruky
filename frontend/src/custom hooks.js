@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "./context";
 
 export const useFetch = (url, options) => {
 	const [response, setResponse] = useState(null);
+	const { search } = useContext(AppContext);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -15,36 +17,36 @@ export const useFetch = (url, options) => {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [search]);
 	return response;
 };
 
-export const useCheckForClickOutside = (ref, containerSelector, state, setState) => {
+export const useCheckForClickOutside = (ref, containerSelector, search, setState) => {
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
 			if (!e.target.closest(containerSelector) && !ref.current.contains(e.target)) {
-				setState({ ...state, isOpen: false });
+				setState({ ...search, isOpen: false });
 			}
 		};
 		document.addEventListener("mousedown", handleOutsideClick);
 		return () => {
 			document.removeEventListener("mousedown", handleOutsideClick);
 		};
-	}, [state]);
+	}, [search]);
 };
 
-export const useCloseWindowOnEsc = (state, setState) => {
+export const useCloseWindowOnEsc = (search, setState) => {
 	useEffect(() => {
 		const handleEscape = (e) => {
-			if (e.keyCode === 27 && state.isOpen) {
-				setState({ ...state, isOpen: false });
+			if (e.keyCode === 27 && search.isOpen) {
+				setState({ ...search, isOpen: false });
 			}
 		};
 		document.addEventListener("keydown", handleEscape);
 		return () => {
 			document.removeEventListener("keydown", handleEscape);
 		};
-	}, [state]);
+	}, [search]);
 };
 
 export function useURLParams() {

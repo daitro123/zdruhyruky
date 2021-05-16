@@ -7,9 +7,9 @@ import { HeartIcon } from "../../components/Icons/Icons";
 const SingleProduct = ({ match }) => {
 	const id = match.params.id;
 
-	const item = useFetch(`http://localhost:3100/items/${id}`, {});
+	const predmet = useFetch(`http://localhost:3100/items/${id}`, {});
 
-	if (!item) {
+	if (!predmet) {
 		return (
 			<main className="SingleProduct">
 				<div className="container">Zboží nenalezeno</div>
@@ -20,25 +20,27 @@ const SingleProduct = ({ match }) => {
 	return (
 		<main className="SingleProduct">
 			<div className="container flex">
-				<Gallery item={item} />
+				<Gallery predmet={predmet} />
 				<section className="details">
-					<h1>{item.brand}</h1>
+					<h1>{predmet.znacka}</h1>
 
 					<div className="details__wrapper">
 						<div className="details__title">CENA</div>
-						<div className="details__value details__value--price">{item.price} Kč</div>
+						<div className="details__value details__value--price">
+							{predmet.cena} Kč
+						</div>
 					</div>
 					<div className="details__wrapper">
 						<div className="details__title">STAV</div>
-						<div className="details__value">{item.condition}</div>
+						<div className="details__value">{predmet.stav}</div>
 					</div>
 					<div className="details__wrapper">
 						<div className="details__title">VELIKOST</div>
-						<div className="details__value">{item.size}</div>
+						<div className="details__value">{predmet.velikost}</div>
 					</div>
 					<div className="details__wrapper">
 						<div className="details__title">BARVA</div>
-						<div className="details__value">{item.color}</div>
+						<div className="details__value">{predmet.barva}</div>
 					</div>
 					<div className="details__wrapper--col">
 						<div className="details__title py-1">POPIS</div>

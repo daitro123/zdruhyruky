@@ -55,11 +55,11 @@ export const reducer = (state, action) => {
 };
 
 export const AppProvider = ({ children }) => {
-	const [products, setProducts] = useState([]);
-	const [state, dispatch] = useReducer(reducer, initState);
+	const [predmety, setPredmety] = useState([]);
+	const [search, dispatch] = useReducer(reducer, initState);
 
 	return (
-		<AppContext.Provider value={{ state, dispatch, products, setProducts }}>
+		<AppContext.Provider value={{ search, dispatch, predmety, setPredmety }}>
 			{children}
 		</AppContext.Provider>
 	);

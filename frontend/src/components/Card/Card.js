@@ -4,27 +4,27 @@ import { getURLfriendlyString } from "../../utils";
 import { HeartIcon } from "../Icons/Icons";
 import { Link } from "react-router-dom";
 
-const Card = ({ product }) => {
+const Card = ({ predmet }) => {
 	return (
 		<article className="Card">
 			<div className="content">
 				<header>
 					<Link
-						to={`/${getURLfriendlyString(product.attribute)}/${getURLfriendlyString(
-							product.type
-						)}/${product.id}`}
+						to={`/${getURLfriendlyString(predmet.pohlavi)}/${getURLfriendlyString(
+							predmet.druh
+						)}/${predmet.id}`}
 					>
-						<h3>{product.brand}</h3>
+						<h3>{predmet.znacka}</h3>
 					</Link>
 				</header>
 				<div className="image-container">
-					<img src={product.images[0]} alt="" />
+					<img src={predmet.images[0]} alt="" />
 				</div>
 				<div className="labels">
 					<div className="legend-container">
-						<div className="price">{product.price} Kč</div>
-						<div className="size">{product.size}</div>
-						<div className="color">{product.color}</div>
+						<div className="price">{predmet.cena} Kč</div>
+						<div className="size">{predmet.velikost}</div>
+						<div className="color">{predmet.barva}</div>
 					</div>
 					<HeartIcon size={20} isLiked={false} />
 				</div>

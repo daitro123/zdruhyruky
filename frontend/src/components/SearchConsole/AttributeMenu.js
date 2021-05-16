@@ -6,11 +6,11 @@ import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 import { useURLParams } from "../../custom hooks";
 
 const AttributeMenu = ({ attributeType }) => {
-	const { state, dispatch } = useContext(AppContext);
+	const { search, dispatch } = useContext(AppContext);
 	const { searchParams } = useURLParams();
 	const [gender, setGender] = useState("");
 
-	// state for rendering brands in popup menu
+	// search for rendering brands in popup menu
 	const [znackyVyber, setZnackyVyber] = useState([brands]);
 	const [znackaInput, setZnackaInput] = useState("");
 
@@ -85,7 +85,7 @@ const AttributeMenu = ({ attributeType }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "barva", barva.name);
 									}}
-									checked={state.barva.includes(barva.name)}
+									checked={search.barva.includes(barva.name)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--color-${index}`} className="checkmark">
@@ -128,7 +128,7 @@ const AttributeMenu = ({ attributeType }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "znacka", brand);
 									}}
-									checked={state.znacka.includes(brand)}
+									checked={search.znacka.includes(brand)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--brand-${index}`} className="checkmark">
@@ -199,7 +199,7 @@ const AttributeMenu = ({ attributeType }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "velikost", velikost);
 									}}
-									checked={state.velikost.includes(velikost)}
+									checked={search.velikost.includes(velikost)}
 									hidden
 								/>
 								<label
@@ -231,7 +231,7 @@ const AttributeMenu = ({ attributeType }) => {
 									onChange={(e) => {
 										handleCheckbox(e, "stav", option);
 									}}
-									checked={state.stav.includes(option)}
+									checked={search.stav.includes(option)}
 									hidden
 								/>
 								<label htmlFor={`checkbox--stav-${index}`} className="checkmark">
@@ -267,7 +267,7 @@ const AttributeMenu = ({ attributeType }) => {
 			<Druhy
 				katalogArr={katalogArr.filter((katalog) => katalog.pohlavi === gender)}
 				setGender={setGender}
-				state={state}
+				search={search}
 				dispatch={dispatch}
 				handleCheckbox={handleCheckbox}
 			/>
@@ -277,7 +277,7 @@ const AttributeMenu = ({ attributeType }) => {
 
 export default AttributeMenu;
 
-const Druhy = ({ katalogArr, setGender, state, handleCheckbox }) => {
+const Druhy = ({ katalogArr, setGender, search, handleCheckbox }) => {
 	return (
 		<div className="AttributeMenu">
 			<div className="row pointer" onClick={() => setGender("")}>
@@ -294,7 +294,7 @@ const Druhy = ({ katalogArr, setGender, state, handleCheckbox }) => {
 								type="checkbox"
 								name={`checkbox--stav-${katalog.katalogID}`}
 								id={`checkbox--stav-${katalog.katalogID}`}
-								checked={state.katalog.includes(katalog.katalogID)}
+								checked={search.katalog.includes(katalog.katalogID)}
 								onChange={(e) => {
 									handleCheckbox(e, "katalog", katalog.katalogID);
 								}}

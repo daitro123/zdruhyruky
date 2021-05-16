@@ -5,7 +5,32 @@ const router = express.Router();
 // items routes
 
 router.get("/", (req, res) => {
-	res.json(data);
+	const queryStrings = req.query;
+
+	if (!queryStrings) {
+		res.json(data);
+	} else {
+		let filteredArr = data.result;
+
+		for (key in queryStrings) {
+			if (Array.isArray(queryStrings[key])) {
+				filteredArr = filteredArr.filter((predmet) =>
+					queryStrings[key].includes(predmet[key])
+				);
+			} else if (key === "cenaOd") {
+				filteredArr = filteredArr.filter(
+					(predmet) => predmet[key] >= parseInt(queryStrings[key])
+				);
+			} else if (key === "cenaDo") {
+				filteredArr = filteredArr.filter(
+					(predmet) => predmet[key] <= parseInt(queryStrings[key])
+				);
+			} else {
+				filteredArr = filteredArr.filter((predmet) => predmet[key] == queryStrings[key]);
+			}
+		}
+		res.json({ result: filteredArr });
+	}
 });
 
 router.get("/:id", (req, res) => {

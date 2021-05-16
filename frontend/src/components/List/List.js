@@ -3,13 +3,11 @@ import { AppContext } from "../../context";
 import Card from "../Card/Card";
 import "./List.scss";
 
-const List = () => {
-	const { products } = useContext(AppContext);
-
+const List = ({ predmety }) => {
 	return (
 		<section className="List container">
-			{products.map((product) => {
-				return <Card key={product.id} product={product} />;
+			{predmety.map((predmet) => {
+				return <Card key={predmet.id} predmet={predmet} />;
 			})}
 		</section>
 	);
