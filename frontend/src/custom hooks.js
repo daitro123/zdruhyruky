@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 export const useFetch = (url, options) => {
 	const [response, setResponse] = useState(null);
@@ -47,6 +47,33 @@ export const useCloseWindowOnEsc = (state, setState) => {
 	}, [state]);
 };
 
-export function useQuery() {
-	return new URLSearchParams(useLocation().search);
+export function useURLParams() {
+	const history = useHistory();
+	const params = new URLSearchParams(history.location.search);
+	const updateURL = (params) => {
+		history.push({
+			pathname: "/predmety",
+			search: params.toString(),
+		});
+	};
+
+	return {
+		searchParams: {
+			params: params,
+			append(key, value) {
+				params.append(key, value);
+				updateURL(params);
+			},
+			remove(value) {
+				const newParams = new URLSearchParams(
+					Array.from(params).filter((param) => param[1] !== value)
+				);
+				updateURL(newParams);
+			},
+			removeAll(key) {
+				params.delete(key);
+				updateURL(params);
+			},
+		},
+	};
 }

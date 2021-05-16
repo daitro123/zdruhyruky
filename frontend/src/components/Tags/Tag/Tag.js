@@ -1,23 +1,21 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useURLParams } from "../../../custom hooks";
 import "./Tag.scss";
-import { removeAllQueriesFromURL, removeQueryFromURL } from "../../../utils";
 import { AppContext } from "../../../context";
 import { IconX } from "../../Icons/Icons";
 import { katalogArr } from "../../../data";
 
 const Tag = ({ text, attribute }) => {
 	const { dispatch } = useContext(AppContext);
-	const history = useHistory();
+	const { searchParams } = useURLParams();
 
 	const handleRemoveTag = (e, attribute, text) => {
-		console.log(attribute);
 		if (attribute === "cenaOd" || attribute === "cenaDo") {
 			dispatch({ type: "REMOVE_PRICE", attributeType: attribute });
-			removeAllQueriesFromURL(history, attribute);
+			searchParams.removeAll(attribute);
 		} else {
 			dispatch({ type: "REMOVE", attributeType: attribute, value: text });
-			removeQueryFromURL(history, text);
+			searchParams.remove(text);
 		}
 	};
 

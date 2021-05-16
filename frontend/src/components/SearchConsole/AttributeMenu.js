@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./AttributeMenu.scss";
 import { AppContext } from "../../context";
-import { useHistory } from "react-router";
 import { colorArr, brands, stavOptions, velikosti, katalogArr } from "../../data";
-import { removeQueryFromURL, removeAllQueriesFromURL, appendQueryToURL } from "../../utils";
 import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
+import { useURLParams } from "../../custom hooks";
 
 const AttributeMenu = ({ attributeType }) => {
 	const { state, dispatch } = useContext(AppContext);
-	const history = useHistory();
+	const { searchParams } = useURLParams();
 	const [gender, setGender] = useState("");
 
 	// state for rendering brands in popup menu
@@ -49,10 +48,12 @@ const AttributeMenu = ({ attributeType }) => {
 	const handleCheckbox = (e, attribute, value) => {
 		if (e.target.checked) {
 			dispatch({ type: "ADD", attributeType: attribute, value: value });
-			appendQueryToURL(history, attribute, value);
+			// appendQueryToURL(history, attribute, value);
+			searchParams.append(attribute, value);
 		} else {
 			dispatch({ type: "REMOVE", attributeType: attribute, value: value });
-			removeQueryFromURL(history, value);
+			// removeQueryFromURL(history, value);
+			searchParams.remove(value);
 		}
 	};
 
@@ -60,11 +61,11 @@ const AttributeMenu = ({ attributeType }) => {
 		if (e.keyCode === 13) {
 			if (value) {
 				dispatch({ type: "SET_PRICE", attributeType: attribute, value: value });
-				removeAllQueriesFromURL(history, attribute); // have to remove the previous query first
-				appendQueryToURL(history, attribute, value);
+				searchParams.removeAll(attribute); // have to remove the previous query first
+				searchParams.append(attribute, value);
 			} else {
 				dispatch({ type: "REMOVE_PRICE", attributeType: attribute });
-				removeAllQueriesFromURL(history, attribute);
+				searchParams.removeAll(attribute);
 			}
 		}
 	};
