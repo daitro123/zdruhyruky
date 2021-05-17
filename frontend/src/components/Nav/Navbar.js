@@ -83,6 +83,12 @@ const Navbar = () => {
 											to={`/predmety?katalog=${katalog.katalogID}`}
 											onClick={() => {
 												setCatalogList({ ...catalogList, isOpen: false });
+												dispatch({ type: "RESET" }); // clear previous selections
+												dispatch({
+													type: "ADD",
+													attributeType: "katalog",
+													value: katalog.katalogID,
+												});
 											}}
 										>
 											{katalog.druh}

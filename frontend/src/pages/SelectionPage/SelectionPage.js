@@ -11,7 +11,6 @@ const SelectionPage = () => {
 	const predmety = useFetch(`http://localhost:3100/items?${searchParams.params.toString()}`, {});
 
 	useEffect(() => {
-		dispatch({ type: "RESET" });
 		dispatch({
 			type: "ADD",
 			attributeType: "katalog",
@@ -35,21 +34,11 @@ const SelectionPage = () => {
 		dispatch({ type: "ADD", attributeType: "stav", value: searchParams.params.getAll("stav") });
 	}, []);
 
-	if (!predmety) {
-		return (
-			<>
-				<SearchConsole />
-				<Tags />
-				<div>LOADING</div>
-			</>
-		);
-	}
-
 	return (
 		<>
 			<SearchConsole />
 			<Tags />
-			<List predmety={predmety.result} />
+			{!predmety ? <div>LOADING</div> : <List predmety={predmety.result} />}
 		</>
 	);
 };

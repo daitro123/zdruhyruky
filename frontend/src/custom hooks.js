@@ -4,7 +4,7 @@ import { AppContext } from "./context";
 
 export const useFetch = (url, options) => {
 	const [response, setResponse] = useState(null);
-	const { search } = useContext(AppContext);
+	const { searchState } = useContext(AppContext);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -17,36 +17,36 @@ export const useFetch = (url, options) => {
 			}
 		};
 		fetchData();
-	}, [search]);
+	}, [searchState]);
 	return response;
 };
 
-export const useCheckForClickOutside = (ref, containerSelector, search, setState) => {
+export const useCheckForClickOutside = (ref, containerSelector, state, setState) => {
 	useEffect(() => {
 		const handleOutsideClick = (e) => {
 			if (!e.target.closest(containerSelector) && !ref.current.contains(e.target)) {
-				setState({ ...search, isOpen: false });
+				setState({ ...state, isOpen: false });
 			}
 		};
 		document.addEventListener("mousedown", handleOutsideClick);
 		return () => {
 			document.removeEventListener("mousedown", handleOutsideClick);
 		};
-	}, [search]);
+	}, [state]);
 };
 
-export const useCloseWindowOnEsc = (search, setState) => {
+export const useCloseWindowOnEsc = (state, setState) => {
 	useEffect(() => {
 		const handleEscape = (e) => {
-			if (e.keyCode === 27 && search.isOpen) {
-				setState({ ...search, isOpen: false });
+			if (e.keyCode === 27 && state.isOpen) {
+				setState({ ...state, isOpen: false });
 			}
 		};
 		document.addEventListener("keydown", handleEscape);
 		return () => {
 			document.removeEventListener("keydown", handleEscape);
 		};
-	}, [search]);
+	}, [state]);
 };
 
 export function useURLParams() {

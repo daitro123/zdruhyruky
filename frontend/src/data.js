@@ -1103,7 +1103,6 @@ export const brands = [
 	"Chica & Chico",
 	"Supremebeing",
 	"Viktor & Rolf",
-	"Pull&Bear",
 	"Sea to Summit",
 	"Schiesser",
 ];

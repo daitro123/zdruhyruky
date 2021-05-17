@@ -4,11 +4,11 @@ import { AppContext } from "../../context";
 import Tag from "./Tag/Tag";
 
 const Tags = () => {
-	const { search } = useContext(AppContext);
+	const { searchState } = useContext(AppContext);
 
 	return (
 		<div className="Tags container">
-			{Object.entries(search).map((attribute) => {
+			{Object.entries(searchState).map((attribute) => {
 				// Object.entries creates an array of obj.keys and values... [attribute[0] key, attribute[1] value(s)]
 
 				// checking for only-one-choice attributes

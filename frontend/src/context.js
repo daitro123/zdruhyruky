@@ -19,7 +19,7 @@ export const reducer = (state, action) => {
 			if (Array.isArray(action.value)) {
 				return {
 					...state,
-					[action.attributeType]: [...state[action.attributeType], ...action.value],
+					[action.attributeType]: [...action.value],
 				};
 			}
 			return {
@@ -56,10 +56,10 @@ export const reducer = (state, action) => {
 
 export const AppProvider = ({ children }) => {
 	const [predmety, setPredmety] = useState([]);
-	const [search, dispatch] = useReducer(reducer, initState);
+	const [searchState, dispatch] = useReducer(reducer, initState);
 
 	return (
-		<AppContext.Provider value={{ search, dispatch, predmety, setPredmety }}>
+		<AppContext.Provider value={{ searchState, dispatch, predmety, setPredmety }}>
 			{children}
 		</AppContext.Provider>
 	);
