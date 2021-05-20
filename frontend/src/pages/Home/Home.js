@@ -5,7 +5,7 @@ import List from "../../components/List/List";
 import { useFetch } from "../../custom hooks";
 
 const Home = () => {
-	const predmety = useFetch(`http://localhost:3100/items`, {});
+	const predmety = useFetch(`http://localhost:3100/api/items`, {});
 
 	return (
 		<main className="Home">

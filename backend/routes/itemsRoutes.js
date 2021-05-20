@@ -11,13 +11,12 @@ router.get("/", (req, res) => {
 		res.json(data);
 	} else {
 		let filteredArr = data.result;
-		console.log(queryStrings);
+
 		for (key in queryStrings) {
 			if (Array.isArray(queryStrings[key])) {
 				filteredArr = filteredArr.filter((predmet) =>
 					queryStrings[key].includes(predmet[key].toString())
 				);
-				console.log(filteredArr);
 			} else if (key === "cenaOd") {
 				filteredArr = filteredArr.filter(
 					(predmet) => predmet[key] >= parseInt(queryStrings[key])

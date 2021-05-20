@@ -7,7 +7,7 @@ import { HeartIcon } from "../../components/Icons/Icons";
 const SingleProduct = ({ match }) => {
 	const id = match.params.id;
 
-	const predmet = useFetch(`http://localhost:3100/items/${id}`, {});
+	const predmet = useFetch(`http://localhost:3100/api/items/${id}`, {});
 
 	if (!predmet) {
 		return (

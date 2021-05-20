@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // express routes
 const itemsRoutes = require("./routes/itemsRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 app.use(
 	cors({
@@ -13,10 +14,11 @@ app.use(
 	})
 );
 
-app.get("/", (req, res) => {});
+app.get("/api", (req, res) => {});
 
 // routes
-app.use("/items", itemsRoutes);
+app.use("/api/items", itemsRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`);

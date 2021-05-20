@@ -9,7 +9,7 @@ const Registration = () => {
 
 	return (
 		<div className="Registration container">
-			<form className="registration-form">
+			<form className="registration-form" onSubmit={}>
 				<h2>Registrace</h2>
 				<p className="warning-msg">{errorMsg}</p>
 				<div className="form-control">
@@ -18,6 +18,7 @@ const Registration = () => {
 						type="nickname"
 						name="nickname"
 						id="nickname"
+						value={nickname}
 						onChange={(e) => setNickname(e.target.value)}
 					/>
 				</div>
@@ -27,6 +28,7 @@ const Registration = () => {
 						type="email"
 						name="email"
 						id="email"
+						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 				</div>
@@ -36,6 +38,7 @@ const Registration = () => {
 						type="password"
 						name="password"
 						id="password"
+						value={password}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 				</div>
