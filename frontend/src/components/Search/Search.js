@@ -13,23 +13,6 @@ const Search = () => {
 		setSearchTerm(input);
 	};
 
-	useEffect(() => {
-		const fetchProducts = async () => {
-			try {
-				const response = await fetch("http://localhost:3100/items");
-				if (response.ok) {
-					const data = await response.json();
-					setPredmety(data.result);
-				} else {
-					throw new Error("Fetch has failed");
-				}
-			} catch (error) {
-				alert(error);
-			}
-		};
-		fetchProducts();
-	}, [searchTerm, setPredmety]);
-
 	return (
 		<div className="Search">
 			<form className="search__form" onSubmit={handleSubmit}>
