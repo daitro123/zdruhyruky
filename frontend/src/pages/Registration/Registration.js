@@ -1,25 +1,50 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { Redirect } from "react-router";
+import { AppContext } from "../../context";
 import "./Registration.scss";
 
 const Registration = () => {
-	const [nickname, setNickname] = useState("");
+	const { dispatch } = useContext(AppContext);
+	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMsg, setErrorMsg] = useState("");
 
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		setErrorMsg("");
+
+		const result = await fetch(`http://localhost:3100/api/user/register`, {
+			method: "POST",
+			body: JSON.stringify({ username, email, password }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		const data = await result.json();
+
+		console.log(data);
+		if (result.status !== 200) {
+			setErrorMsg(data.error);
+		} else {
+			<Redirect to="/" />;
+		}
+	};
+
 	return (
 		<div className="Registration container">
-			<form className="registration-form" onSubmit={}>
+			<form className="registration-form" onSubmit={(e) => handleSubmit(e)}>
 				<h2>Registrace</h2>
 				<p className="warning-msg">{errorMsg}</p>
 				<div className="form-control">
-					<label htmlFor="nickname">uživatelské jméno</label>
+					<label htmlFor="username">uživatelské jméno</label>
 					<input
-						type="nickname"
-						name="nickname"
-						id="nickname"
-						value={nickname}
-						onChange={(e) => setNickname(e.target.value)}
+						type="username"
+						name="username"
+						id="username"
+						value={username}
+						onChange={(e) => setUsername(e.target.value)}
 					/>
 				</div>
 				<div className="form-control">
