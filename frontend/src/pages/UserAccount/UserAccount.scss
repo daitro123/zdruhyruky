@@ -1,0 +1,38 @@
+@import "../../sass/variables.scss";
+
+.UserAccount {
+	display: flex;
+	background-color: $clr-green-dark;
+
+	& aside {
+		flex: 1;
+		color: $clr-main;
+	}
+
+	& section {
+		flex: 3;
+	}
+
+	& ul {
+		list-style: none;
+
+		& li {
+			padding: 1rem 0;
+
+			& button {
+				padding: 1rem;
+				background: none;
+				border: 0;
+				font-family: inherit;
+				font-size: 2rem;
+				color: inherit;
+				width: 100%;
+				cursor: pointer;
+
+				&:hover {
+					background-color: rgba(0, 0, 0, 0.1);
+				}
+			}
+		}
+	}
+}

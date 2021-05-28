@@ -6,15 +6,15 @@ import { IconX } from "../../Icons/Icons";
 import { katalogArr } from "../../../data";
 
 const Tag = ({ text, attribute }) => {
-	const { dispatch } = useContext(AppContext);
+	const { dispatchSearch } = useContext(AppContext);
 	const { searchParams } = useURLParams();
 
 	const handleRemoveTag = (e, attribute, text) => {
 		if (attribute === "cenaOd" || attribute === "cenaDo") {
-			dispatch({ type: "REMOVE_PRICE", attributeType: attribute });
+			dispatchSearch({ type: "REMOVE_PRICE", attributeType: attribute });
 			searchParams.removeAll(attribute);
 		} else {
-			dispatch({ type: "REMOVE", attributeType: attribute, value: text });
+			dispatchSearch({ type: "REMOVE", attributeType: attribute, value: text });
 			searchParams.remove(text);
 		}
 	};

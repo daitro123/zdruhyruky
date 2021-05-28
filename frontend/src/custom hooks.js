@@ -81,36 +81,40 @@ export function useURLParams() {
 }
 
 export function useUpdateStateWithParams(searchParams) {
-	const { dispatch } = useContext(AppContext);
+	const { dispatchSearch } = useContext(AppContext);
 
 	useEffect(() => {
-		dispatch({
+		dispatchSearch({
 			type: "ADD",
 			attributeType: "katalog",
 			value: searchParams.params.getAll("katalog"),
 		});
-		dispatch({
+		dispatchSearch({
 			type: "ADD",
 			attributeType: "barva",
 			value: searchParams.params.getAll("barva"),
 		});
-		dispatch({
+		dispatchSearch({
 			type: "ADD",
 			attributeType: "velikost",
 			value: searchParams.params.getAll("velikost"),
 		});
-		dispatch({
+		dispatchSearch({
 			type: "ADD",
 			attributeType: "znacka",
 			value: searchParams.params.getAll("znacka"),
 		});
-		dispatch({ type: "ADD", attributeType: "stav", value: searchParams.params.getAll("stav") });
-		dispatch({
+		dispatchSearch({
+			type: "ADD",
+			attributeType: "stav",
+			value: searchParams.params.getAll("stav"),
+		});
+		dispatchSearch({
 			type: "SET_PRICE",
 			attributeType: "cenaOd",
 			value: searchParams.params.get("cenaOd"),
 		});
-		dispatch({
+		dispatchSearch({
 			type: "SET_PRICE",
 			attributeType: "cenaDo",
 			value: searchParams.params.get("cenaDo"),

@@ -24,19 +24,37 @@ const schema = Joi.object({
 });
 
 // JWT middleware func for authentication
-function authenticateToken(req, res, next) {
+function checkIfTokenExists(req, res, next) {
 	const authHeader = req.headers["authorization"];
 	const token = authHeader && authHeader.split(" ")[1];
 
-	if (token == null) return res.sendStatus(401);
+	if (token == null) {
+		req.error = { message: "No token found!" };
+	}
 
-	jwt.verify(token, process.env.TOKEN_SECRET, (err, user) => {
-		if (err) return res.sendStatus(403);
-
-		req.user = user;
-
+	try {
+		const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+		res.json({ username: decoded.username, accessToken: token });
+	} catch (error) {
+		req.error = { error };
 		next();
-	});
+	}
+}
+
+function verifyToken(req, res, next) {
+	const authHeader = req.headers["authorization"];
+	const token = authHeader && authHeader.split(" ")[1];
+
+	try {
+		if (token == null) {
+			throw new Error("No token found!");
+		}
+
+		const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+		req.user = { username: decoded.username, accessToken: token };
+	} catch (error) {
+		next(error);
+	}
 }
 
 // create MariaDB connection
@@ -55,7 +73,7 @@ router.use(express.json());
 /****************************************/
 /*			   REGISTER USER			*/
 /****************************************/
-router.post("/register", (req, res) => {
+router.post("/register", checkIfTokenExists, (req, res) => {
 	const { username, email, password } = req.body;
 
 	// VALIDATE INPUT
@@ -77,8 +95,8 @@ router.post("/register", (req, res) => {
 
 		// IF DOESNT EXIST, INSERT INTO DB
 		if (!checkUserExists.length) {
-			const hashedPw = await bcrypt.hash(password, 10);
 			try {
+				const hashedPw = await bcrypt.hash(password, 10);
 				const insert = await conn.query(
 					"INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
 					[username, email, hashedPw]
@@ -86,15 +104,15 @@ router.post("/register", (req, res) => {
 
 				// CREATE JWT TOKEN UPON REGISTRATION
 				const token = jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3h" });
-				return res.json({ accessToken: token });
+				return res.json({ username, accessToken: token });
 			} catch (error) {
-				return error;
+				throw new Error("Error has occurred when registering the user");
 			}
 		} else {
 			if (username === checkUserExists[0].username) {
-				return res.status(401).json({ error: "Username already exists" });
+				return res.status(401).json({ error: "Uživatelské jméno již existuje" });
 			} else {
-				return res.status(401).json({ error: "Email already exists" });
+				return res.status(401).json({ error: "Tento email už existuje" });
 			}
 		}
 	};
@@ -105,7 +123,7 @@ router.post("/register", (req, res) => {
 /****************************************/
 /*				LOGIN USER				*/
 /****************************************/
-router.post("/login", (req, res) => {
+router.post("/login", checkIfTokenExists, (req, res) => {
 	const { username, password } = req.body;
 
 	// LOGIN USER
@@ -118,19 +136,26 @@ router.post("/login", (req, res) => {
 			[username]
 		);
 
-		if (!checkUser.length) return res.status(401).json({ error: "User not found!" });
+		if (!checkUser.length) return res.status(401).json({ error: "Uživatel nenalezen!" });
 
 		// IF EXISTS, COMPARE PASSWORD WITH DB
 		const isPasswordOK = await bcrypt.compare(password, checkUser[0].password);
 		if (isPasswordOK) {
-			const token = jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3h" });
-			return res.json({ message: "Successful login!", accessToken: token });
+			const token = jwt.sign({ username }, process.env.TOKEN_SECRET, { expiresIn: "3h" });
+			return res.json({ username, accessToken: token });
 		} else {
-			return res.status(401).json({ error: "Incorrect password!" });
+			return res.status(401).json({ error: "Nesprávné heslo!" });
 		}
 	};
 
 	login();
+});
+
+router.get("/ucet", verifyToken, (req, res) => {
+	const { username } = req.user;
+
+	console.log(username);
+	res.json({ userdata: "data from ucet" });
 });
 
 module.exports = router;

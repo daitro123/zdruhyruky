@@ -6,7 +6,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "../Icons/Icons";
 import { useURLParams } from "../../custom hooks";
 
 const AttributeMenu = ({ attributeType }) => {
-	const { searchState, dispatch } = useContext(AppContext);
+	const { searchState, dispatchSearch } = useContext(AppContext);
 	const { searchParams } = useURLParams();
 	const [gender, setGender] = useState("");
 
@@ -47,11 +47,11 @@ const AttributeMenu = ({ attributeType }) => {
 	// adds or removes selected (checked) attribute to/from context
 	const handleCheckbox = (e, attribute, value) => {
 		if (e.target.checked) {
-			dispatch({ type: "ADD", attributeType: attribute, value: value });
+			dispatchSearch({ type: "ADD", attributeType: attribute, value: value });
 			// appendQueryToURL(history, attribute, value);
 			searchParams.append(attribute, value);
 		} else {
-			dispatch({ type: "REMOVE", attributeType: attribute, value: value });
+			dispatchSearch({ type: "REMOVE", attributeType: attribute, value: value });
 			// removeQueryFromURL(history, value);
 			searchParams.remove(value);
 		}
@@ -60,11 +60,11 @@ const AttributeMenu = ({ attributeType }) => {
 	const handleSetPrice = (e, attribute, value) => {
 		if (e.keyCode === 13) {
 			if (value) {
-				dispatch({ type: "SET_PRICE", attributeType: attribute, value: value });
+				dispatchSearch({ type: "SET_PRICE", attributeType: attribute, value: value });
 				searchParams.removeAll(attribute); // have to remove the previous query first
 				searchParams.append(attribute, value);
 			} else {
-				dispatch({ type: "REMOVE_PRICE", attributeType: attribute });
+				dispatchSearch({ type: "REMOVE_PRICE", attributeType: attribute });
 				searchParams.removeAll(attribute);
 			}
 		}
@@ -268,7 +268,7 @@ const AttributeMenu = ({ attributeType }) => {
 				katalogArr={katalogArr.filter((katalog) => katalog.pohlavi === gender)}
 				setGender={setGender}
 				searchState={searchState}
-				dispatch={dispatch}
+				dispatchSearch={dispatchSearch}
 				handleCheckbox={handleCheckbox}
 			/>
 		);

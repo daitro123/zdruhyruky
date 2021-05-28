@@ -1,0 +1,35 @@
+@import "../../../sass/variables.scss";
+
+.Profil {
+	text-align: center;
+	color: $clr-main;
+
+	& h1 {
+		color: $clr-main;
+	}
+
+	& .portrait-container {
+		width: 12rem;
+		height: 12rem;
+		border-radius: 50%;
+		overflow: hidden;
+		margin: 2rem auto;
+
+		& img {
+			height: 100%;
+			width: 100%;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+
+	& .user-details {
+		& > div {
+			margin-bottom: 2rem;
+		}
+
+		&--label {
+			font-size: 1.6rem;
+		}
+	}
+}

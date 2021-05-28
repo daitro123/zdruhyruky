@@ -4,7 +4,7 @@ import { AppContext } from "../../context";
 import "./Registration.scss";
 
 const Registration = () => {
-	const { dispatch } = useContext(AppContext);
+	const { dispatchUser, userState } = useContext(AppContext);
 	const [username, setUsername] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -24,13 +24,15 @@ const Registration = () => {
 
 		const data = await result.json();
 
-		console.log(data);
 		if (result.status !== 200) {
 			setErrorMsg(data.error);
 		} else {
+			dispatchUser({ type: "REGISTER_USER", payload: data });
 			<Redirect to="/" />;
 		}
 	};
+
+	if (userState.username) return <Redirect to="/ucet" />;
 
 	return (
 		<div className="Registration container">

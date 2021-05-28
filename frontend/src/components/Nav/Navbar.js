@@ -6,11 +6,12 @@ import { useCheckForClickOutside, useCloseWindowOnEsc } from "../../custom hooks
 import { katalogArr } from "../../data";
 import "./Navbar.scss";
 import { AppContext } from "../../context";
+import { UserIcon } from "../Icons/Icons";
 
 const Navbar = () => {
 	const [catalogList, setCatalogList] = useState({ isOpen: false, name: "děti" });
 	const refLinks = useRef(null);
-	const { dispatch } = useContext(AppContext);
+	const { dispatchSearch, userState } = useContext(AppContext);
 
 	// close catalog window if user clicks outside of it
 	useCheckForClickOutside(refLinks, ".catalog", catalogList, setCatalogList);
@@ -39,9 +40,15 @@ const Navbar = () => {
 					<Link to="/">ZDRUHYRUKY</Link>
 				</div>
 				<Search />
-				<Link to="/login" className="btn btn-login">
-					Přihlásit
-				</Link>
+				{!userState.isLogged ? (
+					<Link to="/login" className="btn btn-login">
+						Přihlásit
+					</Link>
+				) : (
+					<Link to="/ucet">
+						<UserIcon />
+					</Link>
+				)}
 			</div>
 			<nav className="container">
 				<ul className="catalog-links" ref={refLinks}>
@@ -83,8 +90,8 @@ const Navbar = () => {
 											to={`/predmety?katalog=${katalog.katalogID}`}
 											onClick={() => {
 												setCatalogList({ ...catalogList, isOpen: false });
-												dispatch({ type: "RESET" }); // clear previous selections
-												dispatch({
+												dispatchSearch({ type: "RESET" }); // clear previous selections
+												dispatchSearch({
 													type: "ADD",
 													attributeType: "katalog",
 													value: katalog.katalogID,

@@ -7,7 +7,7 @@ import { AppContext } from "../../context";
 
 const SelectionPage = () => {
 	const { searchParams } = useURLParams();
-	const { dispatch } = useContext(AppContext);
+	const { dispatchSearch } = useContext(AppContext);
 	const predmety = useFetch(
 		`http://localhost:3100/api/items?${searchParams.params.toString()}`,
 		{}

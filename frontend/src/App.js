@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Registration from "./pages/Registration/Registration";
 import SelectionPage from "./pages/SelectionPage/SelectionPage";
+import UserAccount from "./pages/UserAccount/UserAccount";
 
 function App() {
 	return (
@@ -19,6 +20,7 @@ function App() {
 					<Route exact path="/" component={Home} />
 					<Route path="/login" component={Login} />
 					<Route path="/registration" component={Registration} />
+					<Route path="/ucet" component={UserAccount} />
 					<Route path="/predmety" component={SelectionPage} />
 					<Route path={"/:pohlavi/:druh/:id"} component={SingleProduct} />
 					<Route path="/:pohlavi/:druh" component={SelectionPage} />
