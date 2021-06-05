@@ -9,7 +9,7 @@ import "swiper/components/pagination/pagination.scss";
 
 SwiperCore.use([Mousewheel, Pagination, Thumbs]);
 
-const Gallery = ({ predmet }) => {
+const Gallery = ({ images }) => {
 	const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
 	return (
@@ -23,7 +23,7 @@ const Gallery = ({ predmet }) => {
 				height={"60rem"}
 				style={{ marginRight: "2rem" }}
 			>
-				{predmet.images.map((image, index) => {
+				{images.map((image, index) => {
 					return (
 						<SwiperSlide
 							key={`thumb-${index}`}
@@ -47,7 +47,7 @@ const Gallery = ({ predmet }) => {
 				className="mySwiper"
 				style={{ height: "60rem", width: "40rem", marginLeft: 0, marginRight: 0 }}
 			>
-				{predmet.images.map((image, index) => {
+				{images.map((image, index) => {
 					return (
 						<SwiperSlide
 							key={`slide-${index}`}

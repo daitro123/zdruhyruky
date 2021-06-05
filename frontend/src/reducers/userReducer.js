@@ -10,7 +10,8 @@ export const userReducer = (state, action) => {
 			return { ...state, isLogged: false };
 		case "VERIFIED":
 			return { ...state, isLogged: true };
-
+		case "GET_INFO":
+			return { ...action.payload, isLogged: true };
 		default:
 			break;
 	}

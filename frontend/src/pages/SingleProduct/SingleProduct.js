@@ -19,7 +19,7 @@ const SingleProduct = ({ match }) => {
 	return (
 		<main className="SingleProduct">
 			<div className="container flex">
-				<Gallery predmet={predmet} />
+				<Gallery images={predmet.images} />
 				<section className="details">
 					<h1>{predmet.znacka}</h1>
 
@@ -44,11 +44,7 @@ const SingleProduct = ({ match }) => {
 					<div className="details__wrapper--col">
 						<div className="details__title py-1">POPIS</div>
 						<div className="details__value">
-							<p className="details__description">
-								Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-								architecto repellendus possimus tempore odit necessitatibus, rerum,
-								obcaecati optio placeat earum excepturi eum vitae explicabo ipsa?
-							</p>
+							<p className="details__description">{predmet.popis}</p>
 						</div>
 					</div>
 					<div className="details__wrapper py-2 flex-ac">

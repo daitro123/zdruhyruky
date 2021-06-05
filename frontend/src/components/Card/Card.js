@@ -11,14 +11,14 @@ const Card = ({ predmet }) => {
 				<header>
 					<Link
 						to={`/${getURLfriendlyString(predmet.pohlavi)}/${getURLfriendlyString(
-							predmet.druh
-						)}/${predmet.id}`}
+							predmet.typ
+						)}/${predmet.item_id}`}
 					>
 						<h3>{predmet.znacka}</h3>
 					</Link>
 				</header>
 				<div className="image-container">
-					<img src={predmet.images[0]} alt="" />
+					<img src={predmet.thumbnail} alt="" />
 				</div>
 				<div className="labels">
 					<div className="legend-container">
@@ -26,7 +26,7 @@ const Card = ({ predmet }) => {
 						<div className="size">{predmet.velikost}</div>
 						<div className="color">{predmet.barva}</div>
 					</div>
-					<HeartIcon size={20} isLiked={false} />
+					<HeartIcon size={20} isLiked={predmet.liked === 1} />
 				</div>
 			</div>
 		</article>

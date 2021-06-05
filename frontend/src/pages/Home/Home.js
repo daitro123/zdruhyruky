@@ -14,7 +14,7 @@ const Home = () => {
 					<h2 className="hero__text">Udělejme si radost společně</h2>
 				</div>
 			</section>
-			{!predmety ? <div>LOADING</div> : <List predmety={predmety.result} />}
+			{!predmety ? <div>LOADING</div> : <List predmety={predmety.items} />}
 		</main>
 	);
 };

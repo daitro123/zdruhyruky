@@ -1,9 +1,10 @@
 const express = require("express");
 const Joi = require("joi");
 const bcrypt = require("bcrypt");
-const dotenv = require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const router = express.Router();
+const pool = require("../server");
+const dotenv = require("dotenv").config();
 
 // JOI schema for validation
 const schema = Joi.object({
@@ -52,21 +53,11 @@ function verifyToken(req, res, next) {
 
 		const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
 		req.user = { username: decoded.username, accessToken: token };
+		next();
 	} catch (error) {
 		next(error);
 	}
 }
-
-// create MariaDB connection
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-	host: process.env.DB_HOST,
-	port: process.env.DB_PORT,
-	user: process.env.DB_USER,
-	password: process.env.DB_PASSWORD,
-	connectionLimit: 50,
-	database: process.env.DB_DATABASE,
-});
 
 router.use(express.json());
 
@@ -132,9 +123,11 @@ router.post("/login", checkIfTokenExists, (req, res) => {
 
 		// FIND
 		const checkUser = await conn.query(
-			"SELECT username, password FROM users WHERE username = ?",
+			"SELECT username, user_id, password FROM users WHERE username = ?",
 			[username]
 		);
+
+		console.log(checkUser);
 
 		if (!checkUser.length) return res.status(401).json({ error: "Uživatel nenalezen!" });
 
@@ -151,11 +144,29 @@ router.post("/login", checkIfTokenExists, (req, res) => {
 	login();
 });
 
+/****************************************/
+/*			  GET USER ACCOUNT			*/
+/****************************************/
 router.get("/ucet", verifyToken, (req, res) => {
 	const { username } = req.user;
 
-	console.log(username);
-	res.json({ userdata: "data from ucet" });
+	const getUser = async () => {
+		try {
+			const conn = await pool.getConnection();
+
+			// FIND
+			const user = await conn.query(
+				"SELECT full_name, username, email, user_description, portrait FROM users WHERE username = ?",
+				[username]
+			);
+
+			return res.json({ user: user });
+		} catch (error) {
+			res.status(401).json({ error });
+		}
+	};
+
+	getUser();
 });
 
 module.exports = router;

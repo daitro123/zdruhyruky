@@ -23,5 +23,3 @@ app.use("/api/user", userRoutes);
 app.listen(port, () => {
 	console.log(`Example app listening at http://localhost:${port}`);
 });
-
-//https://www.robinwieruch.de/node-express-server-rest-api

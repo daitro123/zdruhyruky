@@ -7,7 +7,7 @@ const List = ({ predmety }) => {
 	return (
 		<section className="List container">
 			{predmety.map((predmet) => {
-				return <Card key={predmet.id} predmet={predmet} />;
+				return <Card key={predmet.item_id} predmet={predmet} />;
 			})}
 		</section>
 	);

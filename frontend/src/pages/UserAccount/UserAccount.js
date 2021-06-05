@@ -44,7 +44,7 @@ const UserAccount = () => {
 					}
 
 					const data = await result.json();
-					dispatchUser({ type: "VERIFIED" });
+					dispatchUser({ type: "GET_INFO", payload: data.user[0] });
 				} catch (error) {
 					dispatchUser({ type: "VERIFICATION_FAILED" });
 				}
