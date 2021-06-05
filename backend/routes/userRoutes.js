@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 const pool = require("../server");
+const knex = require("../db");
 const dotenv = require("dotenv").config();
 
 // JOI schema for validation
@@ -65,7 +66,7 @@ router.use(express.json());
 /*			   REGISTER USER			*/
 /****************************************/
 router.post("/register", checkIfTokenExists, (req, res) => {
-	const { username, email, password } = req.body;
+	const { full_name, username, email, password } = req.body;
 
 	// VALIDATE INPUT
 	const validation = schema.validate({ username, email, password });
@@ -76,26 +77,29 @@ router.post("/register", checkIfTokenExists, (req, res) => {
 
 	// REGISTER USER
 	const register = async () => {
-		const conn = await pool.getConnection();
-
-		// CHECK IF USER EXISTS - username or email
-		const checkUserExists = await conn.query(
-			"SELECT email, username FROM users WHERE (email = ? OR username = ?)",
-			[email, username]
-		);
+		const checkUserExists = await knex("users")
+			.select("email", "username")
+			.where((builder) => {
+				builder.where("email", email).orWhere("username", username);
+			});
+		console.log(checkUserExists);
 
 		// IF DOESNT EXIST, INSERT INTO DB
 		if (!checkUserExists.length) {
 			try {
 				const hashedPw = await bcrypt.hash(password, 10);
-				const insert = await conn.query(
-					"INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-					[username, email, hashedPw]
-				);
 
+				const insert = await knex("users").insert({
+					full_name: full_name,
+					username: username,
+					email: email,
+					password: hashedPw,
+				});
 				// CREATE JWT TOKEN UPON REGISTRATION
-				const token = jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3h" });
-				return res.json({ username, accessToken: token });
+				const token = jwt.sign({ username, id: insert[0] }, process.env.TOKEN_SECRET, {
+					expiresIn: "3h",
+				});
+				return res.json({ username, id: insert[0], accessToken: token });
 			} catch (error) {
 				throw new Error("Error has occurred when registering the user");
 			}
@@ -119,13 +123,11 @@ router.post("/login", checkIfTokenExists, (req, res) => {
 
 	// LOGIN USER
 	const login = async () => {
-		const conn = await pool.getConnection();
-
 		// FIND
-		const checkUser = await conn.query(
-			"SELECT username, user_id, password FROM users WHERE username = ?",
-			[username]
-		);
+		const checkUser = await knex
+			.select("username", "id", "password")
+			.from("users")
+			.where("username", username);
 
 		console.log(checkUser);
 
@@ -152,13 +154,15 @@ router.get("/ucet", verifyToken, (req, res) => {
 
 	const getUser = async () => {
 		try {
-			const conn = await pool.getConnection();
-
 			// FIND
-			const user = await conn.query(
-				"SELECT full_name, username, email, user_description, portrait FROM users WHERE username = ?",
-				[username]
-			);
+			const user = await knex
+				.select("full_name", "username", "email", "user_description", "portrait")
+				.from("users")
+				.where("username", username);
+			// const user = await conn.query(
+			// 	"SELECT full_name, username, email, user_description, portrait FROM users WHERE username = ?",
+			// 	[username]
+			// );
 
 			return res.json({ user: user });
 		} catch (error) {

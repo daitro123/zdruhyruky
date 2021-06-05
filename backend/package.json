@@ -16,8 +16,9 @@
 		"express": "^4.17.1",
 		"joi": "^17.4.0",
 		"jsonwebtoken": "^8.5.1",
+		"knex": "^0.95.6",
 		"mariadb": "^2.5.3",
-		"sql-template-strings": "^2.2.2"
+		"mysql": "^2.18.1"
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.7"
